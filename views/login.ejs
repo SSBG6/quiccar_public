@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="allstyles.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+<link rel="stylesheet" type="text/css" href="main.css">
+<link rel="stylesheet" type="text/css" href="form.css">
+    <title>Quiccar</title>
+</head>
+<body>
+<%- include('Navbar') %>
+<section>
+    <div class="container">
+        <form action="/login" method="POST"><!-- cred coz Username and email are both -->
+            <label for="cred">Email or Username:</label> 
+            <input type="text" id="cred" name="cred" required><br><br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required><br><br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</section>
+<%- include('Footer') %>
+</body>
+</html>

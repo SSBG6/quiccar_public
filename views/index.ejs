@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    
+    <title>Quiccar</title>
+</head>
+  <body>
+<%- include('Navbar') %>
+<section>
+    <div class="container">
+        <button style="cursor: pointer;" onclick="window.location.href = 'buy'">
+            <div class="overlay">
+                <div class="card-text element">
+                    <h1>Buy</h1>
+                    <p>Find the perfect car for you</p>
+                </div>
+            </div>
+        </button>
+        
+        <button style="cursor: pointer;" onclick="window.location.href = 'sell'">
+            <div class="overlay">
+                <div class="card-text element">
+                    <h1>Sell</h1>
+                    <p>Get the best price for your car</p>
+                </div>
+            </div>
+        </button>
+        
+        <button style="cursor: pointer;" onclick="window.location.href = 'community'">
+            <div class="overlay">
+                <div class="card-text element">
+                    <h1>Community</h1>
+                    <p>Join the Quiccar community</p>
+                </div>
+            </div>
+        </button>
+    </div>    
+<%- include('Footer') %>
+  </body>  
+<!DOCTYPE html>
+</html>
+</body>
+</html>

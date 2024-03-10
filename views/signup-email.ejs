@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="form.css">
+    <title>Quiccar</title>
+</head>
+<body>
+<%- include('Navbar') %>
+<section>
+    <form action="/signup-email" method="POST">
+        <h2>Enter your email</h2>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+        <input class="emailsubmit" type="submit" value="Confirm">
+    </form>
+</section>
+<%- include('Footer') %>
+     
+</body>
+</html>

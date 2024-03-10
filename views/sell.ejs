@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sell</title>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+    <%- include('navbar.ejs') %>
+    
+    <section id="sell">
+        <form action="/savevehicle" method="POST">
+                <h2>Sell</h2>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+            
+            <label for="make">Make:</label>
+            <input type="text" id="make" name="make" required><br><br>
+            
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" required><br><br>
+            
+            <label for="trim">Trim:</label>
+            <input type="text" id="trim" name="trim" required><br><br>
+            
+            <label for="year">Model Year:</label>
+            <input type="number" id="year" name="year" required><br><br>
+
+            <label for="regyear">Registration Year:</label>
+            <input type="number" id="regyear" name="regyear" required><br><br>
+            
+            <label for="plate">Plate Initials:</label>
+            <input type="text" id="plate" name="plate" required><br><br>
+            
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" required><br><br>
+
+            <div class="checkbox-container">
+            <label for="negotiable">Negotiable:</label>
+            <input type="checkbox" id="negotiable" name="negotiable" value="no" onchange="this.value=this.checked?'yes':'no'" required><br><br>
+            </div>
+
+            <label for="condition">Condition:</label>
+            <input type="text" id="condition" name="condition" required><br><br>
+            
+            <label for="mileage">Mileage:</label>
+            <input type="text" id="mileage" name="mileage" required><br><br>
+            
+            <label for="exterior">Exterior:</label>
+            <input type="text" id="exterior" name="exterior" required><br><br>
+            
+            <label for="interior">Interior:</label>
+            <input type="text" id="interior" name="interior" required><br><br>
+            
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required><br><br>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+    
+    <%- include('footer.ejs') %>
+    
+    <script src="script.js"></script>
+<style>
+   
+</style>
+</body>
+</html>

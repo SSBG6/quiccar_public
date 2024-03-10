@@ -1,0 +1,29 @@
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666;
+}
+
+#details {
+    margin-top: 20px;
+}
+
+#details > div {
+    margin-bottom: 10px;
+}
+
+#details > div > p {
+    margin: 5px 0;
+}
+
+.price {
+    font-weight: bold;
+    color: #0066ff;
+}
+
+.negotiable {
+    color: #009900;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="form.css">
+    <title>Quiccar</title>
+    </style>
+</head>
+<body>
+<%- include('Navbar') %>
+<section>
+        <form action="/signup-verification-code" method="POST">
+        <h2>Verify your email</h2>
+        <label for="code">Enter Verification Code:</label>
+        <input type="text" id="code" name="code" required>
+        <br>
+        <input type="submit" value="Verify">
+    </form>
+</section>
+<%- include('Footer') %>
+     
+</body>
+</html>

@@ -1,0 +1,10 @@
+body{
+    background-color: var(--color-tertiary);
+    scroll-behavior: smooth;
+}
+section {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

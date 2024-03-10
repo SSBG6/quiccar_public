@@ -1,0 +1,33 @@
+header {
+    background-color: var(--color-primary);
+    padding: 10px;
+    color: var(--color-accent);
+    position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        margin: 0;
+  }
+button{
+    background-color: var(--color-primary);
+    color: var(--color-accent);
+    padding: 10px;
+    border: transparent;
+    cursor: pointer;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: var(--color-accent);
+    padding: 10px;
+  }
+  
+  .nav a:hover {
+    background-color: var(--color-secondary);
+  }
