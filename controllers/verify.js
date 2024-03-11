@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../controllers/configjwt')
+const JWT_SECRET = require('../controllers/configjwt')
+
 module.exports = {
     post: async (req, res) => {
         const { email } = req.session;
@@ -8,7 +9,7 @@ module.exports = {
             const { code } = req.body;
 
             // Verify the JWT token
-            const decoded = jwt.verify(code, JWT_SECRET);
+            const decoded = jwt.verify(code,JWT_SECRET);
 
             // Extract the email address from the decoded token
             const decodedEmail = decoded.email;
@@ -25,9 +26,14 @@ module.exports = {
             }
         } catch (error) {
             // Handle invalid or expired token
-            console.error("An error occurred while verifying the token:", error);
-            await req.session.destroy();
-            return res.redirect('/error-page');
+            if (error.name === 'TokenExpiredError') {
+                console.error("JWT token has expired");
+                return res.redirect('/resend-verification-code'); // Redirect to a page to request a new verification code
+            } else {
+                console.error("An error occurred while verifying the token:", error);
+                await req.session.destroy();
+                return res.redirect('/error-page');
+            }
         }
     }
 };

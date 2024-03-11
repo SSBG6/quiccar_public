@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../controllers/configjwt')
+const JWT_SECRET = require('../controllers/configjwt')
 
 module.exports = {
     post: async (req, res) => {
