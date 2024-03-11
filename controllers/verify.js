@@ -1,42 +1,33 @@
-const bcrypt = require('bcryptjs');
-const VerificationModel = require("../models/verimail.js");
-
+const jwt = require('jsonwebtoken');
+const {JWT_SECRET} = require('../controllers/configjwt')
 module.exports = {
     post: async (req, res) => {
         const { email } = req.session;
-        let verimail = await VerificationModel.findOne({ email });
-        const { code } = req.body;
-    
-        if (!email || !verimail.token) {
-            await VerificationModel.findOneAndDelete({ email });
-            req.session.destroy((err) => {
-                if (err) {
-                    console.error("Error destroying session:", err);
-                    return res.redirect('/error-page');
-                }
-                console.log("Session destroyed Due to no email in session or token in db");
-                res.redirect('/error-page');
-            });
-  
-        } else {
-                       
-            if (code === verimail.token) {
-                // Now user is authenticated
+
+        try {
+            const { code } = req.body;
+
+            // Verify the JWT token
+            const decoded = jwt.verify(code, JWT_SECRET);
+
+            // Extract the email address from the decoded token
+            const decodedEmail = decoded.email;
+
+            if (email === decodedEmail) {
+                // Email address matches the one stored in the session, mark email as verified
                 req.session.vemail = email;
-                await VerificationModel.findOneAndDelete({ email });
-                res.redirect('/signup');
+                return res.redirect('/signup');
             } else {
-                await VerificationModel.findOneAndDelete({ email });
-                req.session.destroy((err) => {
-                    if (err) {
-                        console.error("Error destroying session:", err);
-                        return res.redirect('/error-page');
-                    }
-                    console.log("Session destroyed");
-                    res.redirect('/signup-verification-code');
-                });
+                // Email address does not match, destroy session and redirect to verification page
+                await req.session.destroy();
+                console.log("Session destroyed because email address does not match");
+                return res.redirect('/signup-verification-code');
             }
+        } catch (error) {
+            // Handle invalid or expired token
+            console.error("An error occurred while verifying the token:", error);
+            await req.session.destroy();
+            return res.redirect('/error-page');
         }
-
-    }};
-
+    }
+};

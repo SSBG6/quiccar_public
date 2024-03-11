@@ -63,15 +63,16 @@ app.post('/savevehicle',vehicle.post);
 
 app.get('/product/:vid', async (req, res) => {
     const vid = req.params.vid;
+    console.log(vid);
     try {
         const vehicle = await VehicleModel.findOne({ vid });
-        console.log(vehicle.uid);
+      
         if (!vehicle) {
             return res.status(404).send('Vehicle not found');
         }
 
         // Find the user associated with the vehicle
-        const user = await UserModel.findOne({ userid: vehicle ? vehicle.uid : null });
+        const user = await UserModel.findOne({ userid: vehicle.uid});
         console.log(vehicle.trim);
         if (!user) {
             return res.status(404).send('User not found');

@@ -41,11 +41,10 @@ module.exports = {
             location,
             time:formattedDateTime
         });
-        
-
-        // Save the user to the database
+        console.log(vid);
         await vehicle.save();
-        res.redirect('/product/$(vid)');
+        res.redirect(`/product/${vid}`);
+
     }
 }
 
