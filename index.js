@@ -7,6 +7,7 @@ const UserModel = require('./models/user.js');
 const app = express();
 const port = process.env.PORT || 4000;
 const dbSelectMongo = require('./controllers/dbselect.js'); 
+const getVehicle = require('./controllers/getVehicle.js');
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,51 +63,9 @@ const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
 
 app.get('/product/:vid', async (req, res) => {
-    const vid = req.params.vid;
-    console.log(vid);
-    try {
-        const vehicle = await VehicleModel.findOne({ vid });
-      
-        if (!vehicle) {
-            return res.status(404).send('Vehicle not found');
-        }
-
-        // Find the user associated with the vehicle
-        const user = await UserModel.findOne({ userid: vehicle.uid});
-        console.log(vehicle.trim);
-        if (!user) {
-            return res.status(404).send('User not found');
-        }
-
-        console.log(vehicle.make);
-        const data = {
-            title: vehicle.title,
-            time: vehicle.time,
-            name: user.username,
-            make: vehicle.make,
-            model: vehicle.model,
-            trim: vehicle.trim,
-            year: vehicle.year,
-            regYear: vehicle.regYear,
-            plate: vehicle.plate,
-            mileage: vehicle.mileage,
-            condition: vehicle.condition,
-            exterior: vehicle.exterior,
-            interior: vehicle.interior,
-            location: vehicle.location,
-            description: vehicle.description,
-            price: vehicle.price,
-            negotiable: vehicle.negotiable
-        };
-
-        
-        res.render('product', data);
-    } catch (error) {
-        
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
+    await getVehicle.post(req, res); 
 });
+
 
 async function runServer() {
     try{//server
