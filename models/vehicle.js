@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const vehicleSchema = new Schema ({
+    files:{
+        type: [String],
+        required: false
+    },
     vid: {
         type: String,
         required: true,

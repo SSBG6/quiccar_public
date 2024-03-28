@@ -3,7 +3,7 @@ const UserModel = require('../models/user'); // Import UserModel
 
 module.exports = {
     post: async (req, res) => {
-        const vid = req.params.vid;
+        const vid = req.query.id;
         console.log(vid);
         try {
             const vehicle = await VehicleModel.findOne({ vid });

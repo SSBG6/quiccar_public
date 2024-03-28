@@ -4,20 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %>: Quiccars</title>
-
-    <!-- Include your CSS files -->
-    <link rel="stylesheet" type="text/css"     href="products.css">
-    <link rel="stylesheet" type="text/css" href="allstyles.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <link rel="stylesheet" type="text/css" href="main.css">
-    <link rel="stylesheet" type="text/css" href="form.css">
+    <link rel="stylesheet" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="products.css">
 </head>
 <body>
-    <div>
+    <%- include('Navbar') %>
+
+    <div class="listing-info">
         <h1><%= title %></h1>
         <p>Posted at <%= time %> by <%= name %></p>
     </div>
-    <div>
+    
+    
+    
+    
+    <div class="pricing">
+        <p>Price: <%= price %></p>
+        <p>Negotiable: <%= negotiable %></p>
+    </div>
+    <div class="vehicle-details">
         <p>Make: <%= make %></p>
         <p>Model: <%= model %></p>
         <p>Trim: <%= trim %></p>
@@ -25,19 +30,16 @@
         <p>Registration Year: <%= regYear %></p>
         <p>Plate: <%= plate %></p>
         <p>Mileage: <%= mileage %></p>
-    </div>
     <p>Condition: <%= condition %></p>
     <p>Exterior: <%= exterior %></p>
     <p>Interior: <%= interior %></p>
-    <div>
+    </div>
+    <div class="description">
+        <p>Description:</p>
+    </div>    
+    <div class="location">
         <p>Location: <%= location %></p>
     </div>
-    <div>
-        <p>Description: <%= description %></p>
-    </div>
-    <div>
-        <p>Price: <%= price %></p>
-        <p>Negotiable: <%= negotiable %></p>
-    </div>
+    <%- include('Footer') %>
 </body>
 </html>

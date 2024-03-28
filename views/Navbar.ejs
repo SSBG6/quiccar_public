@@ -1,13 +1,104 @@
+<link rel="stylesheet" type="text/css" href="allstyles.css">
 <link rel="stylesheet" type="text/css" href="navbar.css">
-<link rel="stylesheet" type="text/css" href="color.css">
-<link rel="stylesheet" type="text/css" href="fonts.css">
+
 <header>
-<div class="nav">
-  <div>
+  <div class="nav">
+    <div class="right">
       <a href="/">Home</a>
-      <a href="login">Log in</a>
-      <a href="signup-email">Sign in</a>
-      <a href="logout">Log Out</a>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Account</button>
+      <div class="dropdown-content">
+        <a href="login">Log in</a>
+        <a href="signup-email">Sign up</a>
+        <a href="logout">Log Out</a>
+      </div>
     </div>
   </div>
 </header>
+      
+<style>
+  .nav{
+    width: 80%;
+    align-items: center;
+  }
+  .right{
+    padding-right: 25px;
+  }
+.dropbtn {
+  background-color: #ffffff;
+  color: #333333;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  margin-left: 25%;
+  z-index: 2000;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown.active .dropdown-content {
+  display: block;
+}
+</style>
+
+<script>
+  // JavaScript for dropdown functionality
+document.addEventListener("DOMContentLoaded", function() {
+  var dropdowns = document.getElementsByClassName("dropdown");
+  var i;
+
+  for (i = 0; i < dropdowns.length; i++) {
+    dropdowns[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var dropdownContent = this.querySelector(".dropdown-content");
+      if (dropdownContent.style.display === "block") {
+        dropdownContent.style.display = "none";
+      } else {
+        dropdownContent.style.display = "block";
+      }
+    });
+  }
+
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      var dropdowns = document.getElementsByClassName("dropdown-content");
+      var i;
+      for (i = 0; i < dropdowns.length; i++) {
+        var openDropdown = dropdowns[i];
+        if (openDropdown.style.display === "block") {
+          openDropdown.style.display = "none";
+          var dropdownParent = openDropdown.parentElement;
+          if (dropdownParent.classList.contains("dropdown")) {
+            dropdownParent.classList.remove("active");
+          }
+        }
+      }
+    }
+  }
+});
+
+</script>

@@ -1,29 +1,36 @@
 
-h1 {
-    color: #333;
+.listing-info h1 {
+    margin-top: 0;
 }
 
-p {
-    color: #666;
+/* Styling for the vehicle-details section */
+.vehicle-details {
+    background-color: #eaeaea;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-width: 700px; /* Limiting the width to 700 pixels */
 }
 
-#details {
-    margin-top: 20px;
+/* Styling for the location section */
+.location {
+    margin-bottom: 20px;
 }
 
-#details > div {
-    margin-bottom: 10px;
+/* Styling for the description section */
+.description {
+    margin-bottom: 20px;
+    max-width: 700px;
 }
 
-#details > div > p {
-    margin: 5px 0;
+/* Styling for the pricing section */
+.pricing {
+    background-color: #eaeaea;
+    padding: 10px;
+    margin-bottom: 20px;
+    max-width: 700px;
 }
 
-.price {
-    font-weight: bold;
-    color: #0066ff;
-}
-
-.negotiable {
-    color: #009900;
+.vehicle-details p {
+    display: inline-block;
+    margin-right: 20px; /* Adjust as needed for spacing */
 }

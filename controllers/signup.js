@@ -45,6 +45,6 @@ module.exports = {
 
 // Function to generate a unique user ID
 function generateUserId() {
-    const buffer = crypto.randomBytes(16);
+    const buffer = crypto.randomBytes(5);
     return buffer.toString('hex');
 }

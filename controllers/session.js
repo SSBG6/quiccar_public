@@ -1,5 +1,6 @@
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+
 const crypto = require('crypto');
 
 const skey = crypto.randomBytes(64).toString('hex');
@@ -8,9 +9,9 @@ const mwsess = session({
     secret: skey,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
+    store: new MongoStore({
         mongoUrl: 'mongodb+srv://admin:hWhFls94NmEdGZ6E@qcdb.6y9mcpc.mongodb.net/qccardb',
-        ttl: 3600 // TTL 30min
+        ttl: 3600 // TTL 1 hour in seconds
     })
 });
 

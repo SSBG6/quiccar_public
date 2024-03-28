@@ -19,14 +19,13 @@ dbSelectMongo()
 app.use(mwsess);
 
 //check user
-app.use((req, res, next) => {
-    if (req.session.userid) {
-        mwsess(req, res, next);
-    } else {
-        next();
+const isAuth = (req, res, next) => {
+    if(req.session.isAuth){
+        next()
+    }else {
+        res.redirect('/login');
     }
-});
-
+}
 //logout 
 app.get('/logout', (req, res) => {
     console.log("Logging out");
@@ -47,6 +46,7 @@ const sign = require('./controllers/signup.js');
 app.post('/signup',sign.post);
 
 //login
+
 const log = require('./controllers/login.js');
 app.post('/login',log.post);
 
@@ -62,7 +62,7 @@ app.post('/signup-verification-code',verify.post);
 const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
 
-app.get('/product/:vid', async (req, res) => {
+app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
 
@@ -93,3 +93,4 @@ async function runServer() {
 }
 
 runServer();
+
