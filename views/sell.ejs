@@ -10,62 +10,74 @@
 <body>
     <%- include('navbar.ejs') %>
     
-    <section id="sell">
-        <form action="/savevehicle" method="POST">
-                <h2>Sell</h2>
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value ="title" required><br><br>
-            
-            <label for="make">Make:</label>
-            <input type="text" id="make" name="make" value ="toyota" required><br><br>
-            
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model" value ="hiace" required><br><br>
-            
-            <label for="trim">Trim:</label>
-            <input type="text" id="trim" name="trim" value ="xc" required><br><br>
-            
-            <label for="year">Model Year:</label>
-            <input type="number" id="year" name="year" value ="100" required><br><br>
-
-            <label for="regyear">Registration Year:</label>
-            <input type="number" id="regyear" name="regyear" value ="100" required><br><br>
-            
-            <label for="plate">Plate Initials:</label>
-            <input type="text" id="plate" name="plate" value ="CA" required><br><br>
-            
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" value ="100" required><br><br>
-
-            <div class="checkbox-container">
-            <label for="negotiable">Negotiable:</label>
-            <input type="checkbox" id="negotiable" name="negotiable" value="no" onchange="this.value=this.checked?'yes':'no'"><br><br>
+    <section id="sell" class="container">
+        <form action="/savevehicle" method="POST" enctype="multipart/form-data">
+            <h2>Sell</h2>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" value="title" required>
             </div>
-
-            <label for="condition">Condition:</label>
-            <input type="text" id="condition" name="condition" value ="good" required><br><br>
-            
-            <label for="mileage">Mileage:</label>
-            <input type="text" id="mileage" name="mileage" value ="100" required><br><br>
-            
-            <label for="exterior">Exterior:</label>
-            <input type="text" id="exterior" name="exterior" value ="black" required><br><br>
-            
-            <label for="interior">Interior:</label>
-            <input type="text" id="interior" name="interior" value ="black" required><br><br>
-            
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location" value ="colombo" required><br><br>
-            
-            <label for="images">Upload Images:</label>
-            <input type="file" id="images" name="images">
-
-            <button type="submit">Submit</button>
+            <div class="form-group">
+                <label for="make">Make:</label>
+                <input type="text" class="form-control" id="make" name="make" value="toyota" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <input type="text" class="form-control" id="model" name="model" value="hiace" required>
+            </div>
+            <div class="form-group">
+                <label for="trim">Trim:</label>
+                <input type="text" class="form-control" id="trim" name="trim" value="xc" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Model Year:</label>
+                <input type="number" class="form-control" id="year" name="year" value="100" required>
+            </div>
+            <div class="form-group">
+                <label for="regyear">Registration Year:</label>
+                <input type="number" class="form-control" id="regyear" name="regyear" value="100" required>
+            </div>
+            <div class="form-group">
+                <label for="plate">Plate Initials:</label>
+                <input type="text" class="form-control" id="plate" name="plate" value="CA" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" class="form-control" id="price" name="price" value="100" required>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="negotiable" name="negotiable" value="no" onchange="this.value=this.checked?'yes':'no'">
+                <label class="form-check-label" for="negotiable">Negotiable</label>
+            </div>
+            <div class="form-group">
+                <label for="condition">Condition:</label>
+                <input type="text" class="form-control" id="condition" name="condition" value="good" required>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Mileage:</label>
+                <input type="text" class="form-control" id="mileage" name="mileage" value="100" required>
+            </div>
+            <div class="form-group">
+                <label for="exterior">Exterior:</label>
+                <input type="text" class="form-control" id="exterior" name="exterior" value="black" required>
+            </div>
+            <div class="form-group">
+                <label for="interior">Interior:</label>
+                <input type="text" class="form-control" id="interior" name="interior" value="black" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" class="form-control" id="location" name="location" value="colombo" required>
+            </div>
+            <div class="form-group">
+                <label for="images">Upload Images:</label><br>
+                <input type="file" id="images" name="images" class="form-control-file" multiple>
+                <small class="form-text text-muted">You can upload multiple images.</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </section>
-    
-    <%- include('footer.ejs') %>
-    
+        
     
 <style>
    
