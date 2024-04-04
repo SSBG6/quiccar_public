@@ -20,7 +20,8 @@ const routes = () => {
         },
         "/signup-verification-code": (req, res) => {   
             res.render("signup-verification-code");
-        }
+        },
+        
     };
 };
 

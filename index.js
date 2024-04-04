@@ -1,6 +1,6 @@
 const express = require('express');
 const mwsess = require('./controllers/session.js');
-const connectToMongoDB = require('./controllers/mongocon.js');
+const axios = require('axios');
 const routes = require('./controllers/routes.js');
 const VehicleModel = require('./models/vehicle.js');
 const UserModel = require('./models/user.js');
@@ -46,7 +46,6 @@ const sign = require('./controllers/signup.js');
 app.post('/signup',sign.post);
 
 //login
-
 const log = require('./controllers/login.js');
 app.post('/login',log.post);
 
@@ -62,9 +61,36 @@ app.post('/signup-verification-code',verify.post);
 const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
 
+//product page
 app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
+
+app.post('/generate-title', (req, res) => {
+    const formData = req.body;
+
+    // Execute the Python script with formData as a parameter
+    exec(`python title.py '${JSON.stringify(formData)}'`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing Python script: ${error.message}`);
+            return;
+        }
+        if (stderr) {
+            console.error(`Python script STDERR: ${stderr}`);
+            return;
+        }
+        // Send the output of the Python script as JSON response
+        res.json(JSON.parse(stdout));
+    });
+});
+
+
+const vehics = require('./controllers/getvech.js');
+app.get('/browse', async (req, res) => {
+    await app.post('/browse', vehics.post);
+});
+
+
 
 
 async function runServer() {
@@ -74,13 +100,6 @@ async function runServer() {
         });}catch (error){
             console.error('Error starting server:', error);
         }
-    try {//mongoDB connection
-        const db = await connectToMongoDB();
-        console.log('(index.js) MongoDB has entered the chat');
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        process.exit(1); 
-    }
     try {//routing
         const rt =await routes();
         for (const [path, handler] of Object.entries(rt)) {

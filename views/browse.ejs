@@ -1,17 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Web Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Listings</title>
+    <style>
+        /* Simple CSS for styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .vehicle {
+            background-color: #fff;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle h2 {
+            margin-top: 0;
+        }
+
+        .vehicle p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Web Page</h1>
-    
-    <p>This is a sample paragraph.</p>
+    <div class="container">
+        <h1>Vehicle Listings</h1>
+        <div id="vehicleList"></div>
+        <button id="loadMore">Load More</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const vehicleList = document.getElementById('vehicleList');
+            const loadMoreBtn = document.getElementById('loadMore');
+            let skip = 0;
+
+            async function fetchData() {
+                try {
+                    const response = await fetch(`/api/vehicles?skip=${skip}`);
+                    const data = await response.json();
+                    return data.vehicles;
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            async function renderData() {
+                const vehicles = await fetchData();
+                if (vehicles.length === 0) {
+                    loadMoreBtn.disabled = true;
+                    return;
+                }
+
+                vehicles.forEach(vehicle => {
+                    const vehicleDiv = document.createElement('div');
+                    vehicleDiv.classList.add('vehicle');
+                    vehicleDiv.innerHTML = `
+                        <h2>${vehicle.title}</h2>
+                        <p><strong>Vehicle ID:</strong> ${vehicle.vid}</p>
+                        <p><strong>Year:</strong> ${vehicle.year}</p>
+                        <p><strong>Registered Year:</strong> ${vehicle.regYear}</p>
+                        <p><strong>Mileage:</strong> ${vehicle.mileage}</p>
+                        <p><strong>Location:</strong> ${vehicle.location}</p>
+                        <p><strong>Price:</strong> ${vehicle.price}</p>
+                    `;
+                    vehicleList.appendChild(vehicleDiv);
+                });
+
+                skip += 10;
+            }
+
+            loadMoreBtn.addEventListener('click', renderData);
+
+            renderData(); // Initial data load
+        });
+    </script>
 </body>
 </html>
-
-<script>
-//so this script needs to a loop, add 10 products at once each time you click 10 more loads, it has to incert the image, title and price for the specific car, and milage year and city.
-//reminder add city to the schema
-</script>

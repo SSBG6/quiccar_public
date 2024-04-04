@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = require('../controllers/configjwt')
+const JWT_SECRET = require('./config')
 
 module.exports = {
     post: async (req, res) => {

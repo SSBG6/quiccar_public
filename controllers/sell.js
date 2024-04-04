@@ -56,11 +56,10 @@ const post = async (req, res, next) => {
             
             // Define a global array to store both promises and filenames
                 let fileUploadData = [];
-                const name =[];
+                const name = [];
                 // Map files to promises and filenames
-                fileUploadData = files.map(file => {
-                    const destinationFilename = `${userid}_${vid}_${file.originalname}`;
-
+                fileUploadData = files.map((file,index) => {
+                    const destinationFilename = `${userid}_${vid}_${index}`;
                     const params = {
                         Bucket: 'myqucckt',
                         Key: destinationFilename,
@@ -72,17 +71,22 @@ const post = async (req, res, next) => {
 
                 // Wait for all promises to resolve
                 await Promise.all(fileUploadData.map(data => data.promise));
+                // Initialize global.name array if it's not already initialized
+                if (!global.name) {
+                    global.name = [];
+                }
 
                 // Now you can access destinationFilename outside of the mapping function
                 fileUploadData.forEach(data => {
                     const name = data.filename;
-                    return name;
-                });
+                    global.name.push(name); // Add this line to the array
+                });0
+
 
                 console.log(name);
             // Create a new vehicle instance
             const newVehicle = new VehicleModel({
-                files: name,
+                files: global.name,
                 vid,
                 uid: userid,
                 title,
