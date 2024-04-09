@@ -13,67 +13,68 @@
     <section id="sell" class="container">
         <form action="/savevehicle" method="POST" enctype="multipart/form-data">
             <h2 class="mb-4">Sell Your Vehicle</h2>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="title">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
-                    </div>
-                    <div class="form-group">
                         <label for="make">Make:</label>
-                        <input type="text" class="form-control" id="make" name="make" placeholder="Enter make" required>
+                        <input type="text" class="form-control" id="make" name="make" placeholder="Enter make" value="Toyota" required>
                     </div>
                     <div class="form-group">
                         <label for="model">Model:</label>
-                        <input type="text" class="form-control" id="model" name="model" placeholder="Enter model" required>
+                        <input type="text" class="form-control" id="model" name="model" placeholder="Enter model" value="Axio" required>
                     </div>
                     <div class="form-group">
                         <label for="trim">Trim:</label>
-                        <input type="text" class="form-control" id="trim" name="trim" placeholder="Enter trim" required>
+                        <input type="text" class="form-control" id="trim" name="trim" placeholder="Enter trim" value="X" required>
                     </div>
                     <div class="form-group">
                         <label for="year">Model Year:</label>
-                        <input type="number" class="form-control" id="year" name="year" placeholder="Enter model year" required>
+                        <input type="number" class="form-control" id="year" name="year" placeholder="Enter model year" value="2019" required>
                     </div>
                     <div class="form-group">
                         <label for="regyear">Registration Year:</label>
-                        <input type="number" class="form-control" id="regyear" name="regyear" placeholder="Enter registration year" required>
+                        <input type="number" class="form-control" id="regyear" name="regyear" placeholder="Enter registration year" value="2022" required>
                     </div>
                     <div class="form-group">
                         <label for="plate">Plate Initials:</label>
-                        <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter plate initials" required>
+                        <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter plate initials" value="CAC" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="price">Price:</label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" required>
+                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" value="100000" required>
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="negotiable" name="negotiable" value="yes">
+                        <input type="hidden" name="negotiable" value="no">
                         <label class="form-check-label" for="negotiable">Negotiable</label>
-                    </div>
+                    </div>                    
                     <div class="form-group">
                         <label for="condition">Condition:</label>
-                        <input type="text" class="form-control" id="condition" name="condition" placeholder="Enter condition" required>
+                        <input type="text" class="form-control" id="condition" name="condition" placeholder="Enter condition" value="mint" required>
                     </div>
                     <div class="form-group">
                         <label for="mileage">Mileage:</label>
-                        <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" required>
+                        <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" value="1000" required>
                     </div>
                     <div class="form-group">
                         <label for="exterior">Exterior:</label>
-                        <input type="text" class="form-control" id="exterior" name="exterior" placeholder="Enter exterior color" required>
+                        <input type="text" class="form-control" id="exterior" name="exterior" placeholder="Enter exterior color" value="white" required>
                     </div>
                     <div class="form-group">
                         <label for="interior">Interior:</label>
-                        <input type="text" class="form-control" id="interior" name="interior" placeholder="Enter interior color" required>
+                        <input type="text" class="form-control" id="interior" name="interior" placeholder="Enter interior color" value="black" required>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="location">Location:</label>
-                <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" required>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="colombo" required>
             </div>
             <div class="form-group">
                 <label for="images">Upload Images:</label><br>
