@@ -1,0 +1,45 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sell</title>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+    <!-- Include your navigation bar -->
+    <% include('navbar.ejs') %>
+    
+    <section id="sell" class="container">
+        <form id="sellForm" action="/gen" method="POST"> <!-- Corrected action attribute -->
+            <br>
+            <h2 class="mb-4">Sell Your Vehicle</h2>
+                <!-- Make -->
+                <label for="make">Make:</label>
+                <input type="text" id="make" name="make"><br><br>
+        
+                <!-- Model -->
+                <label for="model">Model:</label>
+                <input type="text" id="model" name="model"><br><br>
+        
+                <!-- Year -->
+                <label for="year">Year:</label>
+                <input type="text" id="year" name="year"><br><br>
+        
+                <!-- Condition -->
+                <label for="condition">Condition:</label>
+                <input type="text" id="condition" name="condition"><br><br>
+        
+                <input type="submit" value="Submit">
+                              
+            </div>
+        </form>
+    </section>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+</body>
+</html>

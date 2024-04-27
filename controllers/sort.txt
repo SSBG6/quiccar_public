@@ -1,0 +1,42 @@
+[
+  {
+    "filepath": "test_1.jpg",
+    "score": 75
+  },
+  {
+    "filepath": "test_2.jpg",
+    "score": 100
+  },
+  {
+    "filepath": "test_3.jpg",
+    "score": 0
+  },
+  {
+    "filepath": "test_4.jpg",
+    "score": 100
+  },
+  {
+    "filepath": "test_5.jpg",
+    "score": 75
+  },
+  {
+    "filepath": "test_6.jpg",
+    "score": null
+  },
+  {
+    "filepath": "test_7.jpg",
+    "score": null
+  },
+  {
+    "filepath": "test_8.jpg",
+    "score": null
+  },
+  {
+    "filepath": "test_9.jpg",
+    "score": null
+  },
+  {
+    "filepath": "test_10.jpg",
+    "score": null
+  }
+]

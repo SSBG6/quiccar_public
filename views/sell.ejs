@@ -15,7 +15,7 @@
             <h2 class="mb-4">Sell Your Vehicle</h2>
             <div class="form-group">
                 <label for="title">Title:</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title" required>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -92,6 +92,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
     <script>
+        $(document).ready(function(){
+        // Load JSON data from sort.txt
+        $.getJSON('quiccar\controllers\sort.txt', function(data) {
+            // Sort images based on score
+            data.sort((a, b) => b.score - a.score);
+
+            // Update imagePreview div with sorted images
+            $.each(data, function(i, item){
+                $('#imagePreview').append(
+                    '<img src="' + +item.filepath + '" class="img-thumbnail">'
+                );
+            });
+        });
+
         $('#images').on('change', function(e){
             $('#imagePreview').empty();
             var files = e.target.files;
@@ -113,6 +127,7 @@
                 // You can perform actions when the position changes, like updating the order in the form submission
             }
         });
+    });
         $('#generateTitleBtn').click(function(event) {
             event.preventDefault();
             

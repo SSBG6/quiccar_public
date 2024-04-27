@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Sell</title>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+    <%- include('navbar.ejs') %>
+    <form action="/sort" method="POST" enctype="multipart/form-data">
+        <h2 class="mb-4">Sell Your Vehicle</h2>
+<div class="form-group">
+    <label for="images">Upload Images:</label><br>
+    <input type="file" id="images" name="images" class="form-control-file" multiple>
+    <small class="form-text text-muted">You can upload multiple images.</small>
+</div>
+<div id="imagePreview" class="image-preview"></div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+<script>
+$('#images').on('change', function(e){
+$('#imagePreview').empty();
+var files = e.target.files;
+$.each(files, function(i, file){
+    var reader = new FileReader();
+    reader.onload = function(e){
+        $('#imagePreview').append(
+            '<img src="' + e.target.result + '" class="img-thumbnail">'
+        );
+    }
+    reader.readAsDataURL(file);
+});
+});
+</script>

@@ -1,93 +1,93 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Listings</title>
-    <style>
-        /* Simple CSS for styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const vehicleList = document.getElementById('vehicleList');
+    const loadMoreBtn = document.getElementById('loadMore');
+    let skip = 0;
+
+    async function fetchData() {
+        try {
+            const response = await fetch(`/api/vehicles?skip=${skip}`);
+            const data = await response.json();
+            return data.vehicles;
+        } catch (error) {
+            console.error(error);
         }
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
+    async function getImages(userId, vehicleId) {
+        // Construct the image URL based on the provided format
+        const imageUrl = `https://myqucckt.s3.ap-south-1.amazonaws.com/${userId}_${vehicleId}_`;
 
-        .vehicle {
-            background-color: #fff;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+        // Assuming the images are numbered sequentially from 0
+        const images = [];
+        let index = 0;
+        let imageUrlIndex = imageUrl + index;
 
-        .vehicle h2 {
-            margin-top: 0;
-        }
-
-        .vehicle p {
-            margin: 5px 0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Vehicle Listings</h1>
-        <div id="vehicleList"></div>
-        <button id="loadMore">Load More</button>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const vehicleList = document.getElementById('vehicleList');
-            const loadMoreBtn = document.getElementById('loadMore');
-            let skip = 0;
-
-            async function fetchData() {
-                try {
-                    const response = await fetch(`/api/vehicles?skip=${skip}`);
-                    const data = await response.json();
-                    return data.vehicles;
-                } catch (error) {
-                    console.error(error);
-                }
+        // Loop until no more images are found
+        while (true) {
+            // Try to fetch the image
+            const response = await fetch(imageUrlIndex);
+            if (response.ok) {
+                // If the image exists, add it to the images array
+                images.push(imageUrlIndex);
+                index++;
+                imageUrlIndex = imageUrl + index;
+            } else {
+                // If the image does not exist, break the loop
+                break;
             }
+        }
 
-            async function renderData() {
-                const vehicles = await fetchData();
-                if (vehicles.length === 0) {
-                    loadMoreBtn.disabled = true;
-                    return;
-                }
+        return images;
+    }
 
-                vehicles.forEach(vehicle => {
-                    const vehicleDiv = document.createElement('div');
-                    vehicleDiv.classList.add('vehicle');
-                    vehicleDiv.innerHTML = `
-                        <h2>${vehicle.title}</h2>
-                        <p><strong>Vehicle ID:</strong> ${vehicle.vid}</p>
-                        <p><strong>Year:</strong> ${vehicle.year}</p>
-                        <p><strong>Registered Year:</strong> ${vehicle.regYear}</p>
-                        <p><strong>Mileage:</strong> ${vehicle.mileage}</p>
-                        <p><strong>Location:</strong> ${vehicle.location}</p>
-                        <p><strong>Price:</strong> ${vehicle.price}</p>
-                    `;
-                    vehicleList.appendChild(vehicleDiv);
-                });
+    async function renderData() {
+        const vehicles = await fetchData();
+        if (vehicles.length === 0) {
+            loadMoreBtn.disabled = true;
+            return;
+        }
 
-                skip += 10;
-            }
+        for (const vehicle of vehicles) {
+            const vehicleDiv = document.createElement('div');
+            vehicleDiv.classList.add('vehicle');
+            const images = await getImages(vehicle.userId, vehicle.vid);
 
-            loadMoreBtn.addEventListener('click', renderData);
+            // Create a carousel for each vehicle
+            vehicleDiv.innerHTML = `
+                <h2>${vehicle.title}</h2>
+                <div id="carousel${vehicle.vid}" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        ${images.map((image, index) => `
+                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                <img src="${image}" class="d-block w-100" alt="Image ${index + 1}">
+                            </div>
+                        `).join('')}
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel${vehicle.vid}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel${vehicle.vid}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <p><strong>Vehicle ID:</strong> ${vehicle.vid}</p>
+                <p><strong>Year:</strong> ${vehicle.year}</p>
+                <p><strong>Registered Year:</strong> ${vehicle.regYear}</p>
+                <p><strong>Mileage:</strong> ${vehicle.mileage}</p>
+                <p><strong>Location:</strong> ${vehicle.location}</p>
+                <p><strong>Price:</strong> ${vehicle.price}</p>
+            `;
+            vehicleList.appendChild(vehicleDiv);
+        }
 
-            renderData(); // Initial data load
-        });
-    </script>
-</body>
-</html>
+        skip += 10;
+    }
+
+    loadMoreBtn.addEventListener('click', renderData);
+
+    renderData(); // Initial data load
+});
+</script>

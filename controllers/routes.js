@@ -13,7 +13,7 @@ const routes = () => {
             res.render("buy");
         },
         "/sell": (req, res) => {
-            res.render("sell");
+            res.render("ai1_titlegen");
         },
         "/signup-email": (req, res) => {
             res.render("signup-email");
@@ -21,7 +21,18 @@ const routes = () => {
         "/signup-verification-code": (req, res) => {   
             res.render("signup-verification-code");
         },
-        
+        "/completelisting":(req, res) => {
+            res.render("ai1_restofinfo");
+        },
+        "/imageupload":(req, res) => {
+            res.render("ai1_image");
+        },
+        "/test":(req, res) => {
+            res.render("test");
+        },
+        "/img":(req, res) => {
+            res.render("ai1_image");
+        },
     };
 };
 

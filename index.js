@@ -1,15 +1,18 @@
 const express = require('express');
+const { exec } = require('child_process');
 const mwsess = require('./controllers/session.js');
 const axios = require('axios');
 const routes = require('./controllers/routes.js');
 const VehicleModel = require('./models/vehicle.js');
 const UserModel = require('./models/user.js');
 const app = express();
+const multer = require('multer');
 const port = process.env.PORT || 4000;
 const dbSelectMongo = require('./controllers/dbselect.js'); 
 const getVehicle = require('./controllers/getVehicle.js');
+const bodyParser = require('body-parser');
 //middleware
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
 //mongoose connection
@@ -61,27 +64,49 @@ app.post('/signup-verification-code',verify.post);
 const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
 
+const save = require('./controllers/sort.js');
+app.post('/sort',save.post);
+
 //product page
 app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
 
-app.post('/generate-title', (req, res) => {
-    const formData = req.body;
 
-    // Execute the Python script with formData as a parameter
-    exec(`python title.py '${JSON.stringify(formData)}'`, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`Error executing Python script: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.error(`Python script STDERR: ${stderr}`);
-            return;
-        }
-        // Send the output of the Python script as JSON response
-        res.json(JSON.parse(stdout));
-    });
+app.post('/gen', async (req, res) => {
+    const { year, make, model, condition} = req.body; 
+    function generateTitle(year, make, model, condition) {
+        return new Promise((resolve, reject) => {
+            exec(`python title.py ${year} ${make} ${model} ${condition}`, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`exec error: ${error}`);
+                    reject(error);
+                    return;
+                }
+                resolve(stdout.trim()); // Trim any whitespace from the titl
+            });
+        });
+    }
+    
+    // Call the async function to generate the title
+    try {
+        const gt = await generateTitle(year, make, model, condition);
+
+        const data = {
+            title: gt,
+            make: make,
+            model: model,
+            year: year,
+            condition: condition,
+        };
+
+        console.log(data.title);
+        res.render('ai1_restofinfo', { data: data }); // Pass the data object to the template
+    } catch (error) {
+        // Handle any errors that occur during title generation
+        console.error('Error generating title:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 
