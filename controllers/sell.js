@@ -8,8 +8,8 @@ const VehicleModel = require('../models/vehicle');
 
 // Initialize AWS SDK
 AWS.config.update({
-    accessKeyId: 'AKIAQ3EGV4R2Y7WVNSXL',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAQ3EGV4R2Q6CQK3GN',
+    secretAccessKey: 'Z1QreqMaaAPeONKQo/+fvdkQz6ZzB/oLJp2spQJJ',
     region: 'ap-south-1' // Specify the AWS region where your S3 bucket is located
 });
 

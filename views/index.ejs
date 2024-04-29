@@ -11,103 +11,116 @@
 <%- include('Navbar') %>
 <section>
     <div class="container">
-        
-        <div class="options-container">
-            <div class="option buy" style="cursor: pointer;" onclick="window.location.href = 'buy'">
-                <img src="https://i.imgur.com/ngbgaHL.png" alt="Buy">    
-                <div class="overlay">
-                    <div class="card-text element">
-                        <h1>Buy</h1>
-                        <p>Find the perfect car for you</p>
-                    </div>
-                </div>
+      <div class="options-container">
+        <div class="option buy" onclick="window.location.href = 'buy'">
+          <div class="overlay-text">Buy</div>
+          <img src="https://i.imgur.com/ngbgaHL.png" alt="Buy">
+          <div class="overlay">
+            <div class="card-text element">
+              <h1>Buy</h1>
+              <p>Find the perfect car for you</p>
             </div>
-            
-            <div class="option sell" style="cursor: pointer;" onclick="window.location.href = 'sell'">
-                <img src="https://i.imgur.com/V8Li4WE.png" alt="Sell">
-                <div class="overlay">
-                    <div class="card-text element">
-                        <h1>Sell</h1>
-                        <p>Get the best price for your car</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="option community" style="cursor: pointer;" onclick="window.location.href = 'community'">
-                <img src="https://i.imgur.com/l6ymuOQ.png" alt="Community">
-                <div class="overlay">
-                    <div class="card-text element">
-                        <h1>Community</h1>
-                        <p>Join the Quiccar community</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        
+
+        <div class="option sell" onclick="window.location.href = 'sell'">
+          <div class="overlay-text">Sell</div>
+          <img src="https://i.imgur.com/V8Li4WE.png" alt="Sell">
+          <div class="overlay">
+            <div class="card-text element">
+              <h1>Sell</h1>
+              <p>Get the best price for your car</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="option community" onclick="window.location.href = 'community'">
+          <div class="overlay-text">Community</div>
+          <img src="https://i.imgur.com/l6ymuOQ.png" alt="Community">
+          <div class="overlay">
+            <div class="card-text element">
+              <h1>Community</h1>
+              <p>Join the Quiccar community</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>     
 <%- include('Footer') %>
   </body>  
 <!DOCTYPE html>
 </html>
 
 <style>
-.options-container {
-    display: flex;
-    justify-content: space-around; /* Adjust as needed */
-    align-items: center;
-    margin-top: 20px; /* Adjust as needed */
-}
+    
+    .options-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-.option {
-    position: relative;
-    width: 500px; /* Adjust as needed */
-    height: 500px; /* Adjust as needed */
-    border: 1px solid #ccc; /* Adjust border properties as needed */
-    border-radius: 10px; /* Adjust border radius as needed */
-    overflow: hidden;
-    margin: 20px;
-    transition: transform 0.3s ease-in-out; /* Smooth transition on hover */
-}
+    .option {
+        top: 20px;
+      position: relative;
+      overflow: hidden;
+      width: 300px;
+      height: 60vh;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: #fff;
+      cursor: pointer;
+    }
 
-.option:hover {
-    transform: scale(1.05); /* Adjust scaling factor on hover */
-}
+    .option:hover {
+        transform: scale(1.05);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
 
-.option img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    .option img {
+      width: auto;
+      height: 100%;
+      overflow: hidden;
+    }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust overlay color and opacity */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s ease-in-out; /* Smooth transition on hover */
-}
+    .overlay-text {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-.option:hover .overlay {
-    opacity: 1; /* Show overlay on hover */
-}
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
 
-.card-text {
-    text-align: center;
-    color: #fff; /* Adjust text color */
-}
+    .option:hover .overlay {
+      opacity: 1;
+    }
 
-.card-text h1 {
-    font-size: 24px; /* Adjust heading font size */
-    margin-bottom: 10px; /* Adjust margin as needed */
-}
+    .card-text {
+      color: #fff;
+    }
+  
+  </style>
 
-.card-text p {
- 
-}
-
-</style>

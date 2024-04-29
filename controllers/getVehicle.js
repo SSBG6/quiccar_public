@@ -15,6 +15,7 @@ module.exports = {
                 return res.status(404).send('User not found');
             }
             const data = {
+                files: vehicle.files,
                 title: vehicle.title,
                 time: vehicle.time,
                 name: user.username,

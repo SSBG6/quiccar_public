@@ -1,104 +1,133 @@
 <link rel="stylesheet" type="text/css" href="allstyles.css">
 <link rel="stylesheet" type="text/css" href="navbar.css">
 <link rel="stylesheet" href="bootstrap.css">
-<header>
-  <div class="nav">
-    <div class="right">
-      <a href="/">Home</a>
-    </div>
-    <div class="dropdown">
-      <button class="dropbtn tn btn-primary">Account</button>
-      <div class="dropdown-content">
-        <a  href="login">Log in</a>
-        <a href="signup-email">Sign up</a>
-        <a href="logout">Log Out</a>
-      </div>
-    </div>
-  </div>
-</header>
-      
 <style>
-  .nav{
+  /* Your CSS styles here */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .nav {
     width: 80%;
     align-items: center;
+    position: sticky;
+    top: 0;
+    padding:0;
+    margin: 0;
+    z-index: 10000; /* Adjust the z-index as needed */
   }
-  .right{
+  .right {
     padding-right: 25px;
   }
-.dropbtn {
-  background-color: #ffffff;
-  color: #333333;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropdown {
-  margin-left: 25%;
-  z-index: 2000;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  color: #333333;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-}
-
-.dropdown.active .dropdown-content {
-  display: block;
-}
+  .dropbtn {
+    background-color: #000000;
+    color: #333333;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  .dropdown {
+    margin-left: 25%;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2000;
+  }
+  .dropdown-content a {
+    color: #333333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+  .dropdown.active .dropdown-content {
+    display: block;
+  }
+  .navbar-logged-in {
+    display: block;
+  }
+  .navbar-logged-out {
+    display: none;
+  }
+  @media screen and (max-width: 600px) {
+    .navbar-logged-in {
+      display: none;
+    }
+    .navbar-logged-out {
+      display: block;
+    }
+  }
 </style>
 
-<script>
-  // JavaScript for dropdown functionality
-document.addEventListener("DOMContentLoaded", function() {
-  var dropdowns = document.getElementsByClassName("dropdown");
-  var i;
+<header>
+<div class="nav">
+  <div class="right">
+    <a href="/">Home</a>
+  </div>
+  <div class="dropdown dropdown-logged">
+    <button class="dropbtn tn btn-primary">Account</button>
+    <div class="dropdown-content">
+      <a href="profile">Profile</a>
+      <a href="myvehicles">My Vehicles</a>
+      <a href="myarticles">My Articles</a>
+      <a href="mycommunity">My Bids</a>
+      <a href="logout">Log Out</a>
+    </div>
+  </div>
+  <div class="dropdown dropdown-nolog">
+    <button class="dropbtn tn btn-primary">Account</button>
+    <div class="dropdown-content">
+      <a href="login">Log in</a>
+      <a href="signup-email">Sign up</a>
+    </div>
+  </div>
+</div>
+</header>
 
-  for (i = 0; i < dropdowns.length; i++) {
-    dropdowns[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var dropdownContent = this.querySelector(".dropdown-content");
-      if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-      } else {
-        dropdownContent.style.display = "block";
-      }
-    });
+<script>
+// JavaScript for dropdown functionality
+document.addEventListener("DOMContentLoaded", function() {
+  const isLoggedIn = document.cookie.includes('session=loggedin');
+  const dropdownLogged = document.querySelector(".dropdown-logged");
+  const dropdownNoLog = document.querySelector(".dropdown-nolog");
+  const dropdowns = document.querySelectorAll(".dropdown");
+
+  if (isLoggedIn) {
+    dropdownLogged.style.display = 'block';
+    dropdownNoLog.style.display = 'none';
+  } else {
+    dropdownLogged.style.display = 'none';
+    dropdownNoLog.style.display = 'block';
   }
 
-  // Close the dropdown menu if the user clicks outside of it
+  dropdowns.forEach(function(dropdown) {
+    dropdown.addEventListener("click", function() {
+      this.classList.toggle("active");
+      const dropdownContent = this.querySelector(".dropdown-content");
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+  });
+
   window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.style.display === "block") {
-          openDropdown.style.display = "none";
-          var dropdownParent = openDropdown.parentElement;
+      const dropdownContents = document.querySelectorAll(".dropdown-content");
+      dropdownContents.forEach(function(dropdownContent) {
+        if (dropdownContent.style.display === "block") {
+          dropdownContent.style.display = "none";
+          const dropdownParent = dropdownContent.parentElement;
           if (dropdownParent.classList.contains("dropdown")) {
             dropdownParent.classList.remove("active");
           }
         }
-      }
+      });
     }
   }
 });
-
 </script>

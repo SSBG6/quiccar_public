@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>My EJS Page</title>
-</head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="allstyles.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        
+        <title>Quiccar</title>
+    </head>
 <body>
-    <h1>Welcome to my EJS page!</h1>
-    <p>This is a sample EJS template.</p>
-
+    <%- include('Navbar') %>
     <form method="post" action="/submit">
         <!-- Make -->
         <label for="make">Make:</label>

@@ -49,15 +49,17 @@ module.exports = {
             },
             data: data
         };
+        
 
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+                res.cookie('session', 'loggedin', { maxAge: 3600000 }); // Set cookie with a time limit of 1 hour (3600000 milliseconds)
                 res.redirect('/'); // Redirect after Axios request
             })
             .catch(function (error) {
                 console.log(error);
-                res.redirect('/'); // Redirect even if Axios request fails
+                res.redirect('/login'); // Redirect even if Axios request fails
             });
     }
 }

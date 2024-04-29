@@ -13,7 +13,9 @@ const CommentModel = require('./models/comment.js');
 const app = express();
 const fs = require('fs');
 const multer = require('multer');
+//port
 const port = process.env.PORT || 4000;
+//code imports
 const dbSelectMongo = require('./controllers/dbselect.js'); 
 const getVehicle = require('./controllers/getVehicle.js');
 const bodyParser = require('body-parser');
@@ -38,6 +40,7 @@ const isAuth = (req, res, next) => {
 //logout 
 app.get('/logout', (req, res) => {
     console.log("Logging out");
+    res.cookie('session', 'loggedin', { maxAge: 0 }); 
     req.session.destroy((err) => {
         if (err) throw err;
         res.redirect("/");
@@ -138,6 +141,7 @@ app.post('/savearticle',savearticle.post);
 app.get('/article', async (req, res) => {
     await getarticle.post(req, res); 
 });
+
 //generation ai title
 app.post('/gen', async (req, res) => {
     const { year, make, model, condition} = req.body; 
