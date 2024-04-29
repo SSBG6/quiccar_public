@@ -1,0 +1,86 @@
+<!-- browse.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <link rel="stylesheet" type="text/css" href="allstyles.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        
+        <title>Quiccar</title>
+    </head>
+</head>
+<body>
+    <section>
+    <p><%- include('Navbar') %></p>
+    <p>My Vehicles</p>
+    <ul>
+        <% vehicles.forEach(vehicle => { %>
+        <li>
+            <p>
+                <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
+                <a href="/delete?id=<%= vehicle.vid %>">Delete</a>
+            </p>
+        </li>
+        <% }); %>
+    </ul>
+    <p>My Articles</p>
+    <ul>
+        <% articles.forEach(article => { %>
+        <li>
+            <p>
+                <a href="/article?id=<%= article.artid %>"><%= article.id %></a>
+                <a href="/darticle?id=<%= article.artid %>">Delete</a>
+            </p>
+        </li>
+        <% }); %>
+    </ul>
+</section>
+</body>
+</html>
+
+
+<style>
+    /* styles.css */
+    section{
+        padding: 0;
+        margin: 0;
+        top: 15px;
+    }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+</style>

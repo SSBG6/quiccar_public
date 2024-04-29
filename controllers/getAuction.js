@@ -1,20 +1,31 @@
 const VehicleModel = require('../models/vehicle'); // Import VehicleModel
 const UserModel = require('../models/user'); // Import UserModel
+const AuctionModel = require('../models/auction');
 
 module.exports = {
     post: async (req, res) => {
-        const vid = req.query.id;
-        console.log(vid);
+        const auctid = req.query.id;
+        
         try {
-            const vehicle = await VehicleModel.findOne({ vid });
-            if (!vehicle) {
-                return res.status(404).send('Vehicle not found');
+            const auctid = await AuctionModel.findOne({ aucid: auctid });
+            if (!auctid) {
+                return res.status(404).send('Auction not found');
             }
-            const user = await UserModel.findOne({ userid: vehicle.uid});
+            const vech = await VehicleModel.findOne({ vid:vid });
+            if (!vech) {
+                return res.status(404).send('Vechicle not found');
+            }
+            const user = await UserModel.findOne({ userid: auctid.oid});
             if (!user) {
                 return res.status(404).send('User not found');
             }
             const data = {
+                user: user.username,
+                status: auctid.status,
+                created:  auctid.created,
+                time:   auctid.time,
+                reserve: auctid.reserve,
+                bid: auctid.bid,
                 files: vehicle.files,
                 title: vehicle.title,
                 time: vehicle.time,
@@ -32,9 +43,8 @@ module.exports = {
                 location: vehicle.location,
                 description: vehicle.description,
                 price: vehicle.price,
-                negotiable: vehicle.negotiable
             };
-            res.render('product', data);
+            res.render('auction', data);
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');

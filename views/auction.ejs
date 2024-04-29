@@ -39,8 +39,16 @@
         <% } %>
         
         <div class="pricing mt-4">
-            <p>Price: <strong><%= price %></strong></p>
-            <p>Negotiable: <%= negotiable %></p>
+            <p>Reserve: <strong><%= price %></strong></p>
+            <p>Current Bid: <strong><%= bid %></strong></p>
+            <p>Time Left: <strong><%= end %></strong></p>
+            <form action="/bid" method="POST" enctype="multipart/form-data"></form>
+            <div class="form-group">
+                <label for="year">Your Bid:</label>
+                <input type="number" class="form-control" id="bid" name="bid" value="<%= bid %>" required step="25000">
+                <button type="submit" class="btn btn-primary">Make Bid</button>
+        </form>
+            </div>
         </div>
         <div class="location mt-4">
             <p>Location: <%= location %></p>

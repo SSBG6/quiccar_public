@@ -12,6 +12,10 @@ const auctionSchema = new Schema ({
         required: true,
         unique:true
     },
+    oid: { // Owner ID
+        type: String,
+        required: true,
+    },
     status: {
         type: String,
         required: true,
@@ -23,7 +27,11 @@ const auctionSchema = new Schema ({
     time: {
         type:String,
         required:true,
-    }
+    },
+    reserve: {
+        type:Number,
+        required:true,
+    },
 });
 
 module.exports = mongoose.model('auction',auctionSchema);

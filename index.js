@@ -80,6 +80,12 @@ app.post('/sort',save.post);
 app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
+//
+const dela = require('./controllers/darticle.js');
+app.get('/darticle', async (req, res) => {
+    await dela.post(req, res); 
+});
+
 
 //browse pages
 app.get('/browse', async (req, res) => {
@@ -96,27 +102,31 @@ app.get('/browse', async (req, res) => {
 });
 
 //user profile
-app.get('/account', async (req, res) => {
+app.get('/profile', async (req, res) => {
     try {
-        userid = req.session.userid;
-        const user = await UserModel.find(userid);
-        const vehicles = await VehicleModel.find({uid:userid});
-        const articles = await ArticleModel.find({uid:userid});
-        const auctions = await AuctionModel.find({uid:userid});
-        const comments = await CommentModel.find({uid:userid});
-        // Render a page to display all articles
-        console.log(user);
-        console.log(vehicles);
-        console.log(articles);
-        console.log(auctions);
-        console.log(comments);
-        res.render('accounts', { user, vehicles, articles, auctions, comments });
+        const usersid = req.session.userid;
+        const user = await UserModel.findOne({ userid: usersid });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+        const vehicles = await VehicleModel.find({ uid: usersid });
+        if (!vehicles) {
+            return res.status(404).send('Vehicle not found');
+        }
+        const articles = await ArticleModel.find({ userid: usersid });
+        if (!articles) {
+            return res.status(404).send('Article not found');
+        }
+        // const auctions = await AuctionModel.find({ oid: usersid });
+        // const comments = await CommentModel.find({ userid: usersid });
+        res.render('account', { vehicles, articles });
     } catch (error) {
         // Handle error
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
 });
+
 
 
 //community pages

@@ -1,0 +1,86 @@
+<!-- browse.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <link rel="stylesheet" type="text/css" href="allstyles.css">
+        <link rel="stylesheet" type="text/css" href="index.css">
+        <link rel="stylesheet" type="text/css" href="main.css">
+        
+        <title>Quiccar</title>
+    </head>
+</head>
+<body>
+    <%- include('Navbar') %>
+    <h1>Browse Vehicles</h1>
+    <ul>
+        <% vehicles.forEach(vehicle => { %>
+        <li>
+            <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
+            <form method="post" action="/createauction">
+                <select>
+                    <option value="72">72 hours</option>
+                    <option value="48">48 hours</option>
+                    <option value="24">24 hours</option>
+                </select>
+                <label for="reserve">Reserve:</label>
+                <input type="number" id="reserve" name="reserve" step="100000">
+                <input type="submit" value="Submit">
+            </form>
+            <form method="post" action="/toggleauction">
+                <input type="hidden" name="vid" value="<%= vehicle.vid %>">
+                <input type="checkbox" id="auctionToggle" name="auctionToggle">
+                <label for="auctionToggle">Toggle Auction</label>
+                <input type="submit" value="Save">
+            </form>
+            <form method="post" action="/deletevehicle">
+                <input type="hidden" name="vid" value="<%= vehicle.vid %>">
+                <input type="submit" value="Delete">
+            </form>
+            
+        </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
+
+
+<style>
+    /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+</style>

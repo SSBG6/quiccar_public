@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const bidSchema = new Schema ({
-    auc: {
+    aucid: {
         type: String,
         required: true,
     },
@@ -11,18 +11,18 @@ const bidSchema = new Schema ({
         required: true,
         unique:true
     },
-    biduid: {
+    uid: {
         type: String,
         required: true,
     },
     bid: {
-        type: String,
+        type: Number, // Modified to accept number input
         required: true,
     },
     created: {
         type:String,
         required:true,
-    },
+    }
 });
 
 module.exports = mongoose.model('bid',bidSchema);
