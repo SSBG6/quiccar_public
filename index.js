@@ -2,10 +2,16 @@ const express = require('express');
 const { exec } = require('child_process');
 const mwsess = require('./controllers/session.js');
 const axios = require('axios');
+//routes
 const routes = require('./controllers/routes.js');
+//model imports
 const VehicleModel = require('./models/vehicle.js');
 const UserModel = require('./models/user.js');
+const ArticleModel = require('./models/article.js');
+const AuctionModel = require('./models/auction.js');
+const CommentModel = require('./models/comment.js');
 const app = express();
+const fs = require('fs');
 const multer = require('multer');
 const port = process.env.PORT || 4000;
 const dbSelectMongo = require('./controllers/dbselect.js'); 
@@ -72,7 +78,67 @@ app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
 
+//browse pages
+app.get('/browse', async (req, res) => {
+    try {
+        const vehicles = await VehicleModel.find();
+        // Render a page to display all articles
+        console.log(vehicles);
+        res.render('browse', { vehicles });
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
+//user profile
+app.get('/account', async (req, res) => {
+    try {
+        userid = req.session.userid;
+        const user = await UserModel.find(userid);
+        const vehicles = await VehicleModel.find({uid:userid});
+        const articles = await ArticleModel.find({uid:userid});
+        const auctions = await AuctionModel.find({uid:userid});
+        const comments = await CommentModel.find({uid:userid});
+        // Render a page to display all articles
+        console.log(user);
+        console.log(vehicles);
+        console.log(articles);
+        console.log(auctions);
+        console.log(comments);
+        res.render('accounts', { user, vehicles, articles, auctions, comments });
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+
+//community pages
+app.get('/community', async (req, res) => {
+    // Fetch all articles from the database
+    try {
+        const articles = await ArticleModel.find();
+        // Render a page to display all articles
+        res.render('community', { articles });
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+//saving
+const savearticle = require('./controllers/savearticle.js');
+const getarticle = require('./controllers/getArticle');
+app.post('/savearticle',savearticle.post);
+
+//loading articles
+app.get('/article', async (req, res) => {
+    await getarticle.post(req, res); 
+});
+//generation ai title
 app.post('/gen', async (req, res) => {
     const { year, make, model, condition} = req.body; 
     function generateTitle(year, make, model, condition) {
@@ -100,6 +166,37 @@ app.post('/gen', async (req, res) => {
             condition: condition,
         };
 
+        //sorting the images based on
+        fs.readFile('./controllers/sort.txt', 'utf8', (err, jsonString) => {
+            if (err) {
+              console.log('Error reading file:', err);
+              return;
+            }
+          
+            try {
+              // Parse the JSON data
+              const data = JSON.parse(jsonString);
+          
+              // Sorting function to sort by score
+              data.sort((a, b) => b.score - a.score);
+          
+              // Convert the sorted data back to JSON string
+              const sortedJsonString = JSON.stringify(data, null, 2);
+          
+              // Write the sorted JSON back to the file
+              fs.writeFile('./controllers/sort.txt', sortedJsonString, 'utf8', (err) => {
+                if (err) {
+                  console.log('Error writing file:', err);
+                  return;
+                }
+                console.log('File sorted and saved successfully.');
+              });
+            } catch (err) {
+              console.log('Error parsing JSON data:', err);
+            }
+          });
+       
+
         console.log(data.title);
         res.render('ai1_restofinfo', { data: data }); // Pass the data object to the template
     } catch (error) {
@@ -110,10 +207,6 @@ app.post('/gen', async (req, res) => {
 });
 
 
-const vehics = require('./controllers/getvech.js');
-app.get('/browse', async (req, res) => {
-    await app.post('/browse', vehics.post);
-});
 
 
 

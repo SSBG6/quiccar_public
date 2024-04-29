@@ -4,16 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Vehicles</title>
+    <title>Community</title>
 </head>
 <body>
-    <h1>Browse Vehicles</h1>
+    
+    
+    <h1>Browse Community</h1>
     <ul>
-        <% vehicles.forEach(vehicle => { %>
+        <% articles.forEach(article => { %>
         <li>
-            <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
+            <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
         </li>
         <% }); %>
     </ul>
+    <a href="/createarticle">create</a>
 </body>
 </html>

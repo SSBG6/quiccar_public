@@ -14,13 +14,13 @@
         <h1><%= title %></h1>
         <p>Posted at <%= time %> by <%= name %></p>
     </div>
-    
-    
-    
-    
+    <div id="arrayContainer"></div>
     <div class="pricing">
         <p>Price: <%= price %></p>
         <p>Negotiable: <%= negotiable %></p>
+    </div>
+    <div class="image">
+        
     </div>
     <div class="vehicle-details">
         <p>Make: <%= make %></p>
@@ -43,3 +43,16 @@
     <%- include('Footer') %>
 </body>
 </html>
+
+<script>
+    // Fetch the array from the backend
+    fetch('/images')
+      .then(response => response.json())
+      .then(images=> {
+        // Display the array in the frontend
+        console.log(images);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  </script>

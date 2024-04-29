@@ -1,0 +1,29 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const auctionSchema = new Schema ({
+    aucid: {
+        type: String,
+        required: true,
+        unique:true
+    },
+    vid: {
+        type: String,
+        required: true,
+        unique:true
+    },
+    status: {
+        type: String,
+        required: true,
+    },
+    created: {
+        type:String,
+        required:true,
+    },
+    time: {
+        type:String,
+        required:true,
+    }
+});
+
+module.exports = mongoose.model('auction',auctionSchema);

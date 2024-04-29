@@ -41,7 +41,7 @@ const runPythonScript = (filePath) => {
 };
 
 const processFile = async (file, index) => {
-    const filePath = path.join(uploadPath, file.filename);
+    const filePath = path.join('./controllers/uploads/', file.filename); // Modified filepath
     try {
         const score = await runPythonScript(filePath);
         uploadedFiles[index].score = score; // Update the score in the object
@@ -70,7 +70,7 @@ const post = async (req, res, next) => {
 
             // Save uploaded files
             await saveUploadedFiles();
-
+            
             res.redirect('/sell'); // Redirect to '/sell'
         });
     } catch (error) {
@@ -86,8 +86,27 @@ const saveUploadedFiles = async () => {
     try {
         await fs.writeFile(filePath, jsonContent);
         console.log('Uploaded files saved to sort.txt');
+        // Modify the file paths after initial saving
+        await modifyFilePaths();
     } catch (err) {
         console.error('Error saving uploaded files:', err);
+    }
+};
+
+const modifyFilePaths = async () => {
+    try {
+        const filePath = path.join(__dirname, 'sort.txt');
+        const data = await fs.readFile(filePath, 'utf8');
+        const parsedData = JSON.parse(data);
+        // Update file paths
+        parsedData.forEach((file, index) => {
+            parsedData[index].filepath = `${file.filepath}`;
+        });
+        // Save modified data back to the file
+        await fs.writeFile(filePath, JSON.stringify(parsedData, null, 2));
+        console.log('File paths modified in sort.txt');
+    } catch (err) {
+        console.error('Error modifying file paths:', err);
     }
 };
 

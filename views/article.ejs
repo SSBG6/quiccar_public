@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %>: Quiccars</title>
+    <link rel="stylesheet" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="products.css">
+</head>
+<body>
+    <%- include('Navbar') %>
+    <br><br>
+    <div class="listing-info">
+        <h1><%= title %></h1>
+        <p>Posted at <%= time %> by <%= user %></p>
+        <h2> <% content %> </h2>
+        <p> <% tags %> </p>
+    </div>
+    <%- include('Footer') %>
+</body>
+</html>

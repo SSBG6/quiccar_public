@@ -78,11 +78,9 @@ const post = async (req, res, next) => {
 
                 // Now you can access destinationFilename outside of the mapping function
                 fileUploadData.forEach(data => {
-                    const name = data.filename;
+                    const name = "https://myqucckt.s3.ap-south-1.amazonaws.com/"+data.filename;
                     global.name.push(name); // Add this line to the array
-                });0
-
-
+                });
                 console.log(name);
             // Create a new vehicle instance
             const newVehicle = new VehicleModel({
@@ -108,7 +106,6 @@ const post = async (req, res, next) => {
 
             // Save the vehicle to the database
             await newVehicle.save();
-
             // Redirect to the product page
             res.redirect(`/product?id=${vid}`);
         });

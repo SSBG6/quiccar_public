@@ -76,8 +76,9 @@
                 <label for="location">Location:</label>
                 <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="colombo" required>
             </div>
+            
             <div class="form-group">
-                <label for="images">Upload new set of Images:</label><br>
+                <label for="images">Upload  set of Images:</label><br>
                 <input type="file" id="images" name="images" class="form-control-file" multiple>
                 <small class="form-text text-muted">You can upload multiple images.</small>
             </div>
@@ -91,40 +92,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 
     <script>
-        $(document).ready(function(){
-        // Load JSON data from sort.txt
-        $.getJSON('quiccar\controllers\sort.txt', function(data) {
-            // Sort images based on score
-            data.sort((a, b) => b.score - a.score);
-
-            // Update imagePreview div with sorted images
-            $.each(data, function(i, item){
-                $('#imagePreview').append(
-                    '<img src="' + +item.filepath + '" class="img-thumbnail">'
-                );
-            });
-        });
-
-        $('#images').on('change', function(e){
-            $('#imagePreview').empty();
-            var files = e.target.files;
-            $.each(files, function(i, file){
-                var reader = new FileReader();
-                reader.onload = function(e){
-                    $('#imagePreview').append(
-                        '<img src="' + e.target.result + '" class="img-thumbnail">'
-                    );
-                }
-                reader.readAsDataURL(file);
-            });
-        });
-
-        new Sortable(document.getElementById('imagePreview'), {
-            animation: 150,
-            onEnd: function (evt) {
-                console.log('Position changed:', evt.oldIndex, 'to', evt.newIndex);
-                // You can perform actions when the position changes, like updating the order in the form submission
+                    // Function to read the JSON data from a text file
+            function readJSONDataFromFile(filePath) {
+                return fetch(filePath)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to load JSON data from file');
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        try {
+                            const json = JSON.parse(text);
+                            return json;
+                        } catch (error) {
+                            console.error('Error parsing JSON data:', error);
+                            throw new Error('Invalid JSON format');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error reading JSON data from file:', error);
+                    });
             }
-        });
-    });
+
+            // Function to populate the input field with file paths
+            function populateImagesFromJSON(json) {
+                const imagesInput = document.getElementById('images');
+                imagesInput.value = json.images.join(',');
+            }
+
+            // Hardcoded path to the text file containing JSON data
+            const jsonFilePath = 'sort.txt'; // Adjust the path as needed
+
+            // Read the JSON data from the text file and populate the input field
+            readJSONDataFromFile(jsonFilePath)
+                .then(json => {
+                    populateImagesFromJSON(json);
+                });
+
+            new Sortable(document.getElementById('imagePreview'), {
+                animation: 150,
+                onEnd: function (evt) {
+                    console.log('Position changed:', evt.oldIndex, 'to', evt.newIndex);
+                    // You can perform actions when the position changes, like updating the order in the form submission
+                }
+            });
+                
         </script>

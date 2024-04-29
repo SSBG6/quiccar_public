@@ -33,6 +33,15 @@ const routes = () => {
         "/img":(req, res) => {
             res.render("ai1_image");
         },
+        "/qwerty":(req, res) => {
+            res.render("qwerty");
+        },
+        "/community":(req, res) => {
+            res.render("community");
+        },
+        "/createarticle":(req, res) => {
+            res.render("createarticle");
+        },
     };
 };
 
