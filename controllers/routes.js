@@ -42,6 +42,9 @@ const routes = () => {
         "/createarticle":(req, res) => {
             res.render("createarticle");
         },
+        "/passwordreset":(req, res) => {
+            res.render("accpssreset");
+        },
     };
 };
 

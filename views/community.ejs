@@ -9,14 +9,16 @@
 <body>
     <%- include('Navbar') %>
     
-    <h1>Browse Community</h1>
-    <ul>
-        <% articles.forEach(article => { %>
-        <li>
-            <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
-        </li>
-        <% }); %>
-    </ul>
-    <a href="/createarticle">create</a>
+    <section>
+        <h1>Browse Community</h1>
+        <ul>
+            <% articles.forEach(article => { %>
+            <li>
+                <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
+            </li>
+            <% }); %>
+        </ul>
+        <a href="/createarticle">create</a>
+    </section>
 </body>
 </html>

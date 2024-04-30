@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const auctionSchema = new Schema ({
+    title: {
+        type: String,
+        required: true,
+    },
     aucid: {
         type: String,
         required: true,
@@ -31,6 +35,10 @@ const auctionSchema = new Schema ({
     reserve: {
         type:Number,
         required:true,
+    },
+    hbid: {
+        type:String,
+        required:false,
     },
 });
 

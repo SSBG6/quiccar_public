@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="form.css">
+    <title>Quiccar</title>
+</head>
+<body>
+<%- include('Navbar') %>
+<section>
+    <form method="post" action="/updateacc">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<%= data.email %>" readonly><br><br>
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<%= data.username %>"><br><br>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" value="<%= data.phone %>"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" value="" placeholder="Password">
+        <input type="checkbox" id="viewPassword" onclick="togglePasswordVisibility3()">
+        <label for="viewPassword">View Password</label><br><br>
+        
+        <a href="passwordreset">Change Password</a><br><br>
+        <input type="submit" value="Save Changes">
+        <form method="post" action="/duser">
+            <input type="submit" value="Delete Account">
+        </form>
+    </form>
+    
+</section>
+<%- include('Footer') %>
+</body>
+</html>
+
+<script>
+    function togglePasswordVisibility3() {
+        var passwordInput2 = document.getElementById("password");
+        if (passwordInput2.type === "password") {
+            passwordInput2.type = "text";
+        } else {
+            passwordInput2.type = "password";
+        }
+    }
+
+   
+</script>
+

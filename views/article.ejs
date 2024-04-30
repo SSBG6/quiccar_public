@@ -10,12 +10,12 @@
 <body>
     <%- include('Navbar') %>
     <br><br>
-    <div class="listing-info">
+    <section class="listing-info">
         <h1><%= title %></h1>
         <p>Posted at <%= time %> by <%= user %></p>
-        <h2> <% content %> </h2>
+        <h2> <%= content %> </h2>
         <p> <% tags %> </p>
-    </div>
+    </section>
     <%- include('Footer') %>
 </body>
 </html>

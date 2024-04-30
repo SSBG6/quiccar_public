@@ -1,4 +1,5 @@
 const VehicleModel = require('../models/vehicle'); // Import VehicleModel
+const AuctionModel = require('../models/auction'); // Import AuctionModel
 
 module.exports = {
     post: async (req, res) => {
@@ -6,6 +7,7 @@ module.exports = {
         
         try {
             const deletedVehicle = await VehicleModel.findOneAndDelete({ vid: id });
+            const delauc = await AuctionModel.findOneAndDelete({ vid: id });
             if (!deletedVehicle) {
                 return res.status(404).json({ message: "Vehicle not found" });
             }

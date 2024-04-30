@@ -1,14 +1,22 @@
 [
   {
-    "filepath": "./controllers/uploads/test_1.jpg",
-    "score": 100
+    "filepath": "test_3.jpg",
+    "score": 75
   },
   {
-    "filepath": "./controllers/uploads/test_3.jpg",
-    "score": 100
+    "filepath": "test_4.jpg",
+    "score": 75
   },
   {
-    "filepath": "./controllers/uploads/test_2.jpg",
+    "filepath": "test_2.jpg",
     "score": 0
+  },
+  {
+    "filepath": "test_5.jpg",
+    "score": 0
+  },
+  {
+    "filepath": "test_1.jpg",
+    "score": -25
   }
 ]

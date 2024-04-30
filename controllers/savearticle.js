@@ -13,7 +13,7 @@ module.exports = {
         
         const { userid } = req.session;
         // Assuming you have a session variable for email
-        const user = await UserModel.findOne({ userid });
+        const user = await UserModel.findOne({ userid:userid });
             if (!user) {
                 return res.redirect('/login');
             }
@@ -35,7 +35,7 @@ module.exports = {
         });
 
         await article.save();
-        res.redirect('/community'); // Redirect to a page showing all articles
+        res.redirect(`/article?id=${articleId}`); // Redirect to a page showing all articles
     }
 }
 

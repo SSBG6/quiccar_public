@@ -1,0 +1,31 @@
+    section{
+        margin:0;
+        padding: 5px;
+        top: 10px;
+    }
+    .carousel {
+    max-height: 60vh; /* Maximum height of the carousel */
+    overflow: hidden; /* Hide any overflow content */
+    display: flex; /* Center the image horizontally and vertically */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    
+}
+.carousel-inner {
+    overflow: hidden;
+    height: 80%; /* Set the height of the carousel inner container */
+    background-color:#07192e;
+    z-index: -1;
+}
+.carousel-inner img {
+    overflow: hidden;
+    object-fit: scale-down;
+    max-width: auto;
+    max-height: 80vh; /* Ensure the image doesn't exceed the container height */
+    z-index: -1;
+}
+@media (max-width: 768px) { 
+    section { padding: 10px; } 
+    .carousel-inner img { max-width: 100%; max-height: 350px; object-fit: scale-down; }  
+    .pricing, .location, .vehicle-details, 
+    .description { margin-top: 2rem; } }

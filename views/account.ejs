@@ -1,86 +1,119 @@
-<!-- browse.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <head>
-        <link rel="stylesheet" type="text/css" href="allstyles.css">
-        <link rel="stylesheet" type="text/css" href="index.css">
-        <link rel="stylesheet" type="text/css" href="main.css">
-        
-        <title>Quiccar</title>
-    </head>
+    <title>Quiccar</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        section {
+            padding: 50px 0;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .list-group-item {
+            border: 1px solid rgba(0, 123, 255, 0.25);
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .list-group-item a {
+            text-decoration: none;
+        }
+
+        .list-group-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+
+    <%- include('Navbar') %>
     <section>
-    <p><%- include('Navbar') %></p>
-    <p>My Vehicles</p>
-    <ul>
-        <% vehicles.forEach(vehicle => { %>
-        <li>
-            <p>
-                <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
-                <a href="/delete?id=<%= vehicle.vid %>">Delete</a>
-            </p>
-        </li>
-        <% }); %>
-    </ul>
-    <p>My Articles</p>
-    <ul>
-        <% articles.forEach(article => { %>
-        <li>
-            <p>
-                <a href="/article?id=<%= article.artid %>"><%= article.id %></a>
-                <a href="/darticle?id=<%= article.artid %>">Delete</a>
-            </p>
-        </li>
-        <% }); %>
-    </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <h2>My Vehicles</h2>
+                </div>
+                <ul class="list-group">
+                    <% vehicles.forEach(vehicle => { %>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
+                            <a href="/dvehicle?id=<%= vehicle.vid %>" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h2>My Articles</h2>
+                </div>
+                <ul class="list-group">
+                    <% articles.forEach(article => { %>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
+                            <a href="/darticle?id=<%= article.artid %>" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div>
+                    <h2>My Auctions</h2>
+                </div>
+                <ul class="list-group">
+                    <% auctions.forEach(auction => { %>
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/auction?id=<%= auction.aucid %>"><%= auction.title %></a>
+                            <a href="/aucstatus?id=<%= auction.aucid %>" class="btn btn-sm"><%= auction.status %></a>
+                        </div>
+                    </li>
+                    <% }); %>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <h2>My Comments</h2>
+                </div>
+                <ul class="list-group">
+                    <!-- Placeholder for comments -->
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href=""></a>
+                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </section>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-<style>
-    /* styles.css */
-    section{
-        padding: 0;
-        margin: 0;
-        top: 15px;
-    }
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-h1 {
-    color: #333;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-</style>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="form.css">
+    <title>Quiccar</title>
+</head>
+<body>
+<%- include('Navbar') %>
+<section>
+        <form method="post" action="/updatepass">    
+        <label for="password">New Password:</label>
+        <input type="password" id="password1" name="password1" value="" placeholder="Enter New Password">
+        <input type="checkbox" id="viewPassword" onclick="togglePasswordVisibility()">
+        <label for="viewPassword">View Password</label><br><br>
+
+        <label for="password">Confirm New Password:</label>
+        <input type="password" id="password2" name="password2" value="" placeholder="Confirm Password">
+        <input type="checkbox" id="viewPassword" onclick="togglePasswordVisibility2()">
+        <label for="viewPassword">View Password</label><br><br>
+
+        <label for="password">Existing Password:</label>
+        <input type="password" id="password" name="password" value="" placeholder="Password">
+        <input type="checkbox" id="viewPassword" onclick="togglePasswordVisibility3()">
+        <label for="viewPassword">View Password</label><br><br>
+        <input type="submit" value="Save Changes">
+    </form>
+    </div>
+</section>
+<%- include('Footer') %>
+</body>
+</html>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password1");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    }
+    function togglePasswordVisibility2() {
+        var passwordInput2 = document.getElementById("password2");
+        if (passwordInput2.type === "password") {
+            passwordInput2.type = "text";
+        } else {
+            passwordInput2.type = "password";
+        }
+    }
+    function togglePasswordVisibility3() {
+        var passwordInput2 = document.getElementById("password");
+        if (passwordInput2.type === "password") {
+            passwordInput2.type = "text";
+        } else {
+            passwordInput2.type = "password";
+        }
+    }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var password1 = document.getElementById('password1').value;
+        var password2 = document.getElementById('password2').value;
+
+        if (password1 !== password2) {
+            event.preventDefault(); // Prevent form submission
+            alert('Passwords do not match');
+        }
+    });
+</script>

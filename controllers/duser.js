@@ -9,7 +9,7 @@ module.exports = {
             if (!deletedUser) {
                 return res.status(404).json({ message: "User not found" });
             }
-            res.redirect('/profile');
+            return res.status(401).send('<script>alert("Acc Deleted"); window.location.href="/login";</script>');
         } catch (error) {
             console.error("Error deleting user:", error);
             return res.status(500).json({ message: "Internal server error" });

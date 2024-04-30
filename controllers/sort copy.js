@@ -12,50 +12,7 @@ const upload = multer({
         destination: async (req, file, cb) => {
             try {
                 await fs.mkdir(uploadPath, { recursive: true });
-                cb(null, uploadPath);const AWS = require('aws-sdk');
-                const multer = require('multer');
-                const crypto = require('crypto');
-                
-                // Initialize AWS SDK
-                AWS.config.update({
-                    accessKeyId: 'YOUR_ACCESS_KEY_ID',
-                    secretAccessKey: 'YOUR_SECRET_ACCESS_KEY',
-                    region: 'YOUR_AWS_REGION' // Specify the AWS region where your S3 bucket is located
-                });
-                
-                const s3 = new AWS.S3();
-                
-                // Configure Multer for file uploads
-                const upload = multer({
-                    storage: multer.memoryStorage(), // Store files in memory
-                    limits: { fileSize: 100 * 1024 * 1024 } // Limit file size to 100MB
-                });
-                
-                // Function to generate a unique vehicle ID
-                const generateVid = () => crypto.randomBytes(5).toString('hex');
-                
-                // Function to upload files to S3
-                const uploadToS3 = async (files, userid, vid) => {
-                    const uploadedFileUrls = [];
-                
-                    for (let index = 0; index < files.length; index++) {
-                        const file = files[index];
-                        const destinationFilename = `${userid}_${vid}_${index}`;
-                        const params = {
-                            Bucket: 'YOUR_BUCKET_NAME',
-                            Key: destinationFilename,
-                            Body: file.buffer,
-                            ContentType: file.mimetype
-                        };
-                        const data = await s3.upload(params).promise();
-                        uploadedFileUrls.push(data.Location);
-                    }
-                
-                    return uploadedFileUrls;
-                };
-                
-                module.exports = { upload, uploadToS3 };
-                
+                cb(null, uploadPath);
             } catch (err) {
                 cb(err);
             }

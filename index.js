@@ -61,6 +61,14 @@ app.post('/signup',sign.post);
 const log = require('./controllers/login.js');
 app.post('/login',log.post);
 
+//edit accoumd
+const edit = require('./controllers/updateacc.js');
+app.post('/updateacc',edit.post);
+
+//edit password
+const epass = require('./controllers/updpass.js');
+app.post('/updatepass',epass.post);
+
 //send email verification code
 const email = require('./controllers/email-verify.js');
 app.post('/signup-email',email.post);
@@ -73,6 +81,10 @@ app.post('/signup-verification-code',verify.post);
 const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
 
+//create an auction record
+const auction = require('./controllers/createauction.js');
+app.post('/createauction',auction.post);
+
 const save = require('./controllers/sort.js');
 app.post('/sort',save.post);
 
@@ -80,13 +92,45 @@ app.post('/sort',save.post);
 app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
-//
-const dela = require('./controllers/darticle.js');
-app.get('/darticle', async (req, res) => {
-    await dela.post(req, res); 
+//auction page
+const getAuc = require('./controllers/getAuction.js');
+app.get('/auction', async (req, res) => {
+    await getAuc.post(req, res); 
 });
 
+//make bids
+const mbids = require('./controllers/bid.js');
+app.post('/makebid', async (req, res) => {
+    await mbids.post(req, res); 
+} );
 
+//DELETE FUNCTIONS 
+    //delete article
+    const dela = require('./controllers/darticle.js');
+    app.get('/darticle', async (req, res) => {
+        await dela.post(req, res); 
+    });
+    //delete vehicle
+    const delv = require('./controllers/dvech.js');
+    app.get('/dveh', async (req, res) => {
+        await delv.post(req, res); 
+    });
+    //auction status manual change
+    const astatus = require('./controllers/aucstatus.js');
+    app.get('/aucstatus', async (req, res) => {
+        await astatus.post(req, res); 
+    });
+    //delete auction
+    const dauc = require('./controllers/dauc.js');
+    app.post('/delauc',dauc.post);
+    //delete comment
+    const delcom = require('./controllers/dcomment.js');
+    app.get('/dcomment', async (req, res) => {
+        await delcom.post(req, res); 
+    });
+    //delete user
+    const deluser = require('./controllers/duser.js');
+    app.post('/duser',deluser.post);
 //browse pages
 app.get('/browse', async (req, res) => {
     try {
@@ -101,13 +145,26 @@ app.get('/browse', async (req, res) => {
     }
 });
 
+//auction pages
+app.get('/auct', async (req, res) => {
+    try {
+        const auctions = await AuctionModel.find();
+        // Render a page to display all articles
+        console.log(auctions);
+        res.render('auctions', { auctions });
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 //user profile
 app.get('/profile', async (req, res) => {
     try {
         const usersid = req.session.userid;
         const user = await UserModel.findOne({ userid: usersid });
         if (!user) {
-            return res.status(404).send('User not found');
+            return res.status(401).send('<script>alert("you shall not pass"); window.location.href="/";</script>');
         }
         const vehicles = await VehicleModel.find({ uid: usersid });
         if (!vehicles) {
@@ -117,9 +174,12 @@ app.get('/profile', async (req, res) => {
         if (!articles) {
             return res.status(404).send('Article not found');
         }
-        // const auctions = await AuctionModel.find({ oid: usersid });
+        const auctions = await AuctionModel.find({ oid: usersid });
+        if (!auctions) {
+            return res.status(404).send('Article not found');
+        }
         // const comments = await CommentModel.find({ userid: usersid });
-        res.render('account', { vehicles, articles });
+        res.render('account', { vehicles, articles, auctions });
     } catch (error) {
         // Handle error
         console.error(error);
@@ -127,6 +187,36 @@ app.get('/profile', async (req, res) => {
     }
 });
 
+app.get('/settings', async (req, res) => {
+    try {
+        const usersid = req.session.userid;
+        const user = await UserModel.findOne({ userid: usersid });
+        if (!user) {
+            return res.status(404).send('User not found');
+        }
+       
+        res.render('accountsettings', { data: user});
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+app.get('/myv', async (req, res) => {
+    try {
+        const usersid = req.session.userid;
+        const vehicles = await VehicleModel.find({ uid: usersid });
+        if (!vehicles) {
+            return res.status(404).send('Vehicle not found');
+        }
+        res.render('myvehicles', { vehicles });
+    } catch (error) {
+        // Handle error
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
 
 
 //community pages
@@ -219,11 +309,6 @@ app.post('/gen', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
-
-
-
-
 
 async function runServer() {
     try{//server

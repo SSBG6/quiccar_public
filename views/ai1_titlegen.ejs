@@ -1,18 +1,16 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sell</title>
-    <link rel="stylesheet" type="text/css" href="allstyles.css">
-    <link rel="stylesheet" type="text/css" href="index.css">
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiccars</title>
+    <link rel="stylesheet" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="imagepages.css">
+    <link rel="stylesheet" type="text/css" href="products.css">
 </head>
 <body>
-    <!-- Include your navigation bar -->
-    <% include('navbar.ejs') %>
-    
-    <section id="sell" class="container">
+    <%- include('Navbar') %>
+    <section>
         <form id="sellForm" action="/gen" method="POST"> <!-- Corrected action attribute -->
             <br>
             <h2 class="mb-4">Sell Your Vehicle</h2>

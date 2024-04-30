@@ -3,74 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %>: Quiccars</title>
+    <title><%= data.title %>: Quiccars</title>
     <link rel="stylesheet" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="imagepages.css">
     <link rel="stylesheet" type="text/css" href="products.css">
 </head>
 <body>
     <%- include('Navbar') %>
     <section>
-    <div class="container mt-5">
-        <div class="listing-info mb-4">
-            <h1><%= title %></h1>
-            <p>Posted at <%= time %> by <%= name %></p>
-        </div>
-        
-        <% if (files && Array.isArray(files) && files.length > 0) { %>
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <% files.forEach((link, index) => { %>
-                        <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                            <img src="<%= link.trim() %>" class="d-block w-100" alt="Image <%= index + 1 %>">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="listing-info mb-4">
+                        <h1><%= data.title %></h1>
+                        <p>Posted at <%= data.created %> by <%= data.user %></p>
+                    </div>
+                    
+                    <% if (data.files && Array.isArray(data.files) && data.files.length > 0) { %>
+                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <% data.files.forEach((link, index) => { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="<%= link.trim() %>" class="d-block w-100" alt="Image <%= index + 1 %>">
+                                    </div>
+                                <% }); %>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
-                    <% }); %>
+                    <% } else { %>
+                        <p class="mt-4">No images available</p>
+                    <% } %>
+                    
+                    <div class="pricing mt-4">
+                        <p>Reserve: <strong> <%= data.reserve %> </strong></p>
+                        <% if (data.status === 'closed') { %>
+                            <p>Winning Bid: <strong><%= data.hbid %></strong></p>
+                        <% } else { %>
+                            <p>Current Bid: <strong><%= data.hbid %></strong></p>
+                        <% } %>
+                        <p>Time Left: <strong><%= data.time %></strong></p>
+                        <form action="/makebid" method="POST">
+                            <div class="form-group">
+                                <input type="hidden" id="idauc" name="idauc" value="<%= data.id %>">
+                                <label for="year">Your Bid:</label>
+                                <input type="number" class="form-control" id="cbid" name="cbid" value="<%= data.hbid %>" required step="25000" min="<%= data.hbid + 25000 %>">
+                                <% if (data.status === 'closed') { %>
+                                    <button type="submit" class="btn btn-primary" disabled>Auction Concluded</button>
+                                <% } else { %>
+                                    <button type="submit" class="btn btn-primary">Make Bid</button>
+                                <% } %>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                
+                <div class="col-md-6">
+                    <div class="location mt-4">
+                        <p>Location: <%= data.location %></p>
+                    </div>
+                    <div class="vehicle-details mt-4">
+                        <p>Make: <%= data.make %></p>
+                        <p>Model: <%= data.model %></p>
+                        <p>Trim: <%= data.trim %></p>
+                        <p>Year: <%= data.year %></p>
+                        <p>Registration: <%= data.ryear %></p>
+                        <p>Plate: <%= data.plate %></p>
+                        <p>Mileage: <%= data.mileage %></p>
+                        <p>Condition: <%= data.condition %></p>
+                        <p>Exterior: <%= data.exterior %></p>
+                        <p>Interior: <%= data.interior %></p>
+                    </div>
+                    <div class="description mt-4">
+                        <p>Description:</p>
+                        <p><%= data.description %></p>
+                    </div>
+                </div>
             </div>
-        <% } else { %>
-            <p class="mt-4">No images available</p>
-        <% } %>
-        
-        <div class="pricing mt-4">
-            <p>Reserve: <strong><%= price %></strong></p>
-            <p>Current Bid: <strong><%= bid %></strong></p>
-            <p>Time Left: <strong><%= end %></strong></p>
-            <form action="/bid" method="POST" enctype="multipart/form-data"></form>
-            <div class="form-group">
-                <label for="year">Your Bid:</label>
-                <input type="number" class="form-control" id="bid" name="bid" value="<%= bid %>" required step="25000">
-                <button type="submit" class="btn btn-primary">Make Bid</button>
-        </form>
-            </div>
         </div>
-        <div class="location mt-4">
-            <p>Location: <%= location %></p>
-        </div>
-        <div class="vehicle-details mt-4">
-            <p>Make: <%= make %></p>
-            <p>Model: <%= model %></p>
-            <p>Trim: <%= trim %></p>
-            <p>Year: <%= year %></p>
-            <p>Registration: <%= ryear %></p>
-            <p>Plate: <%= plate %></p>
-            <p>Mileage: <%= mileage %></p>
-            <p>Condition: <%= condition %></p>
-            <p>Exterior: <%= exterior %></p>
-            <p>Interior: <%= interior %></p>
-        </div>
-        <div class="description mt-4">
-            <p>Description:</p>
-            <p><%= description %></p>
-        </div>    
-    </div>
-</section>
+    </section>
 </body>
 </html>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -86,32 +103,3 @@
         });
     });
 </script>
-
-<style>
-    section{
-        margin:0;
-        padding: 5px;
-        top: 10px;
-    }
-    .carousel {
-    max-height: 60vh; /* Maximum height of the carousel */
-    overflow: hidden; /* Hide any overflow content */
-    display: flex; /* Center the image horizontally and vertically */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
-.carousel-inner {
-    height: 100%; /* Set the height of the carousel inner container */
-}
-.carousel-inner img {
-    object-fit: contain; /* Make the entire image fit within the carousel */
-    max-width: 100%; /* Ensure the image doesn't exceed the container width */
-    max-height: 100%; /* Ensure the image doesn't exceed the container height */
-}
-@media (max-width: 768px) { 
-    section { padding: 10px; } 
-    .carousel { max-height: 20vh; } 
-    .carousel-inner img { max-height: 80%; } 
-    .pricing, .location, .vehicle-details, 
-    .description { margin-top: 2rem; } }
-</style>

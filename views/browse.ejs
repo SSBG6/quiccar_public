@@ -14,14 +14,16 @@
 </head>
 <body>
     <%- include('Navbar') %>
-    <h1>Browse Vehicles</h1>
-    <ul>
-        <% vehicles.forEach(vehicle => { %>
-        <li>
-            <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
-        </li>
-        <% }); %>
-    </ul>
+    <section>
+        <h1>Browse Vehicles</h1>
+        <ul>
+            <% vehicles.forEach(vehicle => { %>
+            <li>
+                <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
+            </li>
+            <% }); %>
+        </ul>
+    </section>
 </body>
 </html>
 
