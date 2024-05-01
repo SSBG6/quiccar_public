@@ -70,7 +70,7 @@
                     <% articles.forEach(article => { %>
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
+                            <a href="/article?id=<%= article.artid %>" class="btn btn-primary"><%= article.title %></a>
                             <a href="/darticle?id=<%= article.artid %>" class="btn btn-sm btn-danger">Delete</a>
                         </div>
                     </li>

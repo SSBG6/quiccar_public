@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .previewImage {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            cursor: grab;
+        }
+    </style>
+</head>
+
+<body>
+    <% include('Navbar.ejs') %>
+
+    <section>
+        <form action="/savevehicle" method="POST" enctype="multipart/form-data">
+            <div class="container">
+                <h2 class="mb-4">Sell Your Vehicle</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title" name="title" value="<%= data.title || '' %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="make">Make:</label>
+                            <input type="text" class="form-control" id="make" name="make" value="<%= data.make || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="model">Model:</label>
+                            <input type="text" class="form-control" id="model" name="model" value="<%= data.model || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="trim">Trim:</label>
+                            <input type="text" class="form-control" id="trim" name="trim" placeholder="Enter trim" value="<%= data.trim || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="year">Model Year:</label>
+                            <input type="number" class="form-control" id="year" name="year" value="<%= data.year || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="regyear">Registration Year:</label>
+                            <input type="number" class="form-control" id="regyear" name="regyear" placeholder="0000" min="<%= data.year - 1 %>" max="2099" value="<%= data.regyear || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plate">Plate Initials:</label>
+                            <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter plate initials" value="<%= data.plate || '' %>" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" value="<%= data.price || '' %>" required>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="negotiable" name="negotiable" value="true" <% if(data.negotiable === 'true') { %>checked<% } %>>
+                            <label class="form-check-label" for="negotiable">Negotiable</label>
+                        </div>                    
+                        <div class="form-group">
+                            <label for="condition">Condition:</label>
+                            <input type="text" class="form-control" id="condition" name="condition" value="<%= data.condition || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mileage">Mileage:</label>
+                            <input type="text" class="form-control" id="mileage" name="mileage" placeholder="Enter mileage" value="<%= data.mileage || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exterior">Exterior:</label>
+                            <input type="text" class="form-control" id="exterior" name="exterior" placeholder="Enter exterior color" value="<%= data.exterior || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="interior">Interior:</label>
+                            <input type="text" class="form-control" id="interior" name="interior" placeholder="Enter interior color" value="<%= data.interior || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="Enter location" value="<%= data.location || '' %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" id="description" name="description" rows="5" required><%= data.description || '' %></textarea>
+                        </div>
+                            <div class="form-group">
+            
+                                <label for="imageUpload">Select images to upload:</label>
+                                <input type="file" name="images" multiple>
+            
+                            </div>
+                            <div class="row" id="imagePreview" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                                            </div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+
+    <script>
+        function previewImages(event) {
+            var preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+
+            var files = event.target.files;
+
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    var image = document.createElement('img');
+                    image.classList.add('previewImage');
+                    image.src = e.target.result;
+                    image.draggable = true;
+                    image.ondragstart = function(event) {
+                        event.dataTransfer.setData('text/plain', event.target.id);
+                    };
+                    preview.appendChild(image);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function allowDrop(event) {
+            event.preventDefault();
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            var data = event.dataTransfer.getData('text/plain');
+            var draggedImage = document.getElementById(data);
+            var imagePreview = document.getElementById('imagePreview');
+            imagePreview.insertBefore(draggedImage, event.target);
+        }
+    </script>
+</body>
+</html>

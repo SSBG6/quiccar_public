@@ -14,7 +14,6 @@ const auctionSchema = new Schema ({
     vid: {
         type: String,
         required: true,
-        unique:true
     },
     oid: { // Owner ID
         type: String,
@@ -36,7 +35,7 @@ const auctionSchema = new Schema ({
         type:Number,
         required:true,
     },
-    hbid: {
+    highestbidder: {
         type:String,
         required:false,
     },

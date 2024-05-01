@@ -4,72 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiccar</title>
-    <link rel="stylesheet" type="text/css" href="allstyles.css">
-    <style>
-        /* styles.css */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        a {
-            text-decoration: none;
-            color: #007bff;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="allstyles.css">
 </head>
 <body>
-    <!-- Include Navbar -->
-    <%- include('Navbar') %>
+    <!-- Navbar -->
+    <<%- include('Navbar') %>
     
-    <section>
+    <section class="mt-4">
         <div class="container">
-            <h1>Browse Vehicles</h1>
-            <ul>
+            <h1 class="mb-4">Browse Vehicles</h1>
+            <div class="row">
                 <% vehicles.forEach(vehicle => { %>
-                <li>
-                    <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
-                    <!-- Create Auction Form -->
-                    <div style="display: flex;">
-                        <form method="post" action="/createauction">
-                            <input type="hidden" name="vid" value="<%= vehicle.vid %>">
-                            <select name="duration">
-                                <option value="72">72 hours</option>
-                                <option value="48">48 hours</option>
-                                <option value="24">24 hours</option>
-                            </select>
-                            <label for="reserve">Reserve:</label>
-                            <input type="number" name="reserve" step="1000000">
-                            <input type="submit" value="Submit">
-                        </form>
-                        <!-- Delete Vehicle Form -->
-                        <form method="post" action="/delauc">
-                            <input type="hidden" name="vid" value="<%= vehicle.vid %>">
-                            <input type="submit" value="Delete">
-                        </form>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a></h5>
+                            <h5 class="card-title"><a href="/auction?id=<%= vehicle.vid %>">Auction</a></h5>
+                            <p class="card-text">Price: <%= vehicle.price %></p>
+                            <form method="post" action="/createauction">
+                                <input type="hidden" name="vid" value="<%= vehicle.vid %>">
+                                <div class="form-group">
+                                    <select class="form-control" name="duration">
+                                        <option value="72">72 hours</option>
+                                        <option value="48">48 hours</option>
+                                        <option value="24">24 hours</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reserve">Reserve:</label>
+                                    <input type="number" class="form-control" name="reserve" value="<%= vehicle.price %>" step="1000000">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create Auction</button>
+                                <a href="/delauc?id=<%= vehicle.vid %>" class="btn btn-danger float-right">Delete Auction</a>
+                            </form>
+                        </div>
                     </div>
-                </li>
+                </div>
                 <% }); %>
-            </ul>
+            </div>
         </div>
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

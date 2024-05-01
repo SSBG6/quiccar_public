@@ -5,11 +5,11 @@ module.exports = {
         const id = req.query.id;
         
         try {
-            const deletedAuction = await AuctionModel.findOneAndDelete({ auctionId: id });
+            const deletedAuction = await AuctionModel.findOneAndDelete({ vid: id });
             if (!deletedAuction) {
                 return res.status(401).send('<script>alert("Doesnt Exist or Already Deleted"); window.location.href="/myv";</script>');
             }
-            res.redirect('/myv');
+            res.status(401).send('<script>alert("Auction Terminated Deleted"); window.location.href="/myv";</script>');
         } catch (error) {
             console.error("Error deleting auction:", error);
             return res.status(500).json({ message: "Internal server error" });

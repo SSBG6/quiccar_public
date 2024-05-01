@@ -112,7 +112,7 @@ app.post('/makebid', async (req, res) => {
     });
     //delete vehicle
     const delv = require('./controllers/dvech.js');
-    app.get('/dveh', async (req, res) => {
+    app.get('/dvehicle', async (req, res) => {
         await delv.post(req, res); 
     });
     //auction status manual change
@@ -122,7 +122,9 @@ app.post('/makebid', async (req, res) => {
     });
     //delete auction
     const dauc = require('./controllers/dauc.js');
-    app.post('/delauc',dauc.post);
+    app.get('/delauc', async (req, res) => {
+        await dauc.post(req, res);
+    });
     //delete comment
     const delcom = require('./controllers/dcomment.js');
     app.get('/dcomment', async (req, res) => {
@@ -210,7 +212,7 @@ app.get('/myv', async (req, res) => {
         if (!vehicles) {
             return res.status(404).send('Vehicle not found');
         }
-        res.render('myvehicles', { vehicles });
+        res.render('myvehicles', { vehicles});
     } catch (error) {
         // Handle error
         console.error(error);
@@ -243,73 +245,13 @@ app.get('/article', async (req, res) => {
 });
 
 //generation ai title
+const titlegen = require('./controllers/gentitle.js');
 app.post('/gen', async (req, res) => {
-    const { year, make, model, condition} = req.body; 
-    function generateTitle(year, make, model, condition) {
-        return new Promise((resolve, reject) => {
-            exec(`python title.py ${year} ${make} ${model} ${condition}`, (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`exec error: ${error}`);
-                    reject(error);
-                    return;
-                }
-                resolve(stdout.trim()); // Trim any whitespace from the titl
-            });
-        });
-    }
-    
-    // Call the async function to generate the title
-    try {
-        const gt = await generateTitle(year, make, model, condition);
-
-        const data = {
-            title: gt,
-            make: make,
-            model: model,
-            year: year,
-            condition: condition,
-        };
-
-        //sorting the images based on
-        fs.readFile('./controllers/sort.txt', 'utf8', (err, jsonString) => {
-            if (err) {
-              console.log('Error reading file:', err);
-              return;
-            }
-          
-            try {
-              // Parse the JSON data
-              const data = JSON.parse(jsonString);
-          
-              // Sorting function to sort by score
-              data.sort((a, b) => b.score - a.score);
-          
-              // Convert the sorted data back to JSON string
-              const sortedJsonString = JSON.stringify(data, null, 2);
-          
-              // Write the sorted JSON back to the file
-              fs.writeFile('./controllers/sort.txt', sortedJsonString, 'utf8', (err) => {
-                if (err) {
-                  console.log('Error writing file:', err);
-                  return;
-                }
-                console.log('File sorted and saved successfully.');
-              });
-            } catch (err) {
-              console.log('Error parsing JSON data:', err);
-            }
-          });
-       
-
-        console.log(data.title);
-        res.render('ai1_restofinfo', { data: data }); // Pass the data object to the template
-    } catch (error) {
-        // Handle any errors that occur during title generation
-        console.error('Error generating title:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
+    await titlegen.post(req, res); });
+//generate description
+const des = require('./controllers/gendes.js');
+app.post('/gendes', async (req, res) => {
+    await des.post(req, res); });
 async function runServer() {
     try{//server
         app.listen(port, () => {
@@ -327,6 +269,7 @@ async function runServer() {
         process.exit(1); 
     }
 }
+
 
 runServer();
 

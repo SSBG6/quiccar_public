@@ -15,6 +15,7 @@ module.exports = {
                 return res.status(404).send('User not found');
             }
             const data = {
+                phone: user.phone,
                 files: vehicle.files,
                 title: vehicle.title,
                 time: vehicle.time,
@@ -23,7 +24,7 @@ module.exports = {
                 model: vehicle.model,
                 trim: vehicle.trim,
                 year: vehicle.year,
-                ryear: vehicle.regYear,
+                reg: vehicle.regYear,
                 plate: vehicle.plate,
                 mileage: vehicle.mileage,
                 condition: vehicle.condition,

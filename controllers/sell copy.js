@@ -8,10 +8,11 @@ const VehicleModel = require('../models/vehicle');
 
 // Initialize AWS SDK
 AWS.config.update({
-    accessKeyId: 'AKIAQ3EGV4R2Y7WVNSXL',
-    secretAccessKey: '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',
+    accessKeyId: 'AKIAQ3EGV4R2Q6CQK3GN',
+    secretAccessKey: 'Z1QreqMaaAPeONKQo/+fvdkQz6ZzB/oLJp2spQJJ',
     region: 'ap-south-1' // Specify the AWS region where your S3 bucket is located
 });
+
 
 const s3 = new AWS.S3();
 
@@ -28,7 +29,9 @@ const generateVid = () => crypto.randomBytes(5).toString('hex');
 const post = async (req, res, next) => {
     try {
         // Handle file uploads
-        upload.array('images', 5)(req, res, async (err) => {
+        
+
+        upload.array('images')(req, res, async (err) => {
             if (err) {
                 console.error('Error uploading files:', err);
                 return res.status(400).send('Error uploading files');
@@ -41,7 +44,7 @@ const post = async (req, res, next) => {
             }
 
             console.log('Uploaded files:', req.files);
-            const { make, model, trim, title, year, regyear, price, negotiable, plate, condition, mileage, exterior, interior, location } = req.body;
+            const { make, model, trim, title, year, regyear, price, negotiable, plate, condition, mileage, exterior, interior, location, description } = req.body;
             const { userid } = req.session;
 
             // Check if user is logged in
@@ -54,37 +57,26 @@ const post = async (req, res, next) => {
             const vid = generateVid();
             const files = req.files;
             
-            // Define a global array to store both promises and filenames
-                let fileUploadData = [];
-                const name = [];
-                // Map files to promises and filenames
-                fileUploadData = files.map((file,index) => {
-                    const destinationFilename = `${userid}_${vid}_${index}`;
-                    const params = {
-                        Bucket: 'myqucckt',
-                        Key: destinationFilename,
-                        Body: file.buffer,
-                        ContentType: file.mimetype
-                    };
-                    return { promise: s3.upload(params).promise(), filename: destinationFilename };
-                });
+            // Define an array to store S3 URLs of uploaded files
+            const uploadedFileUrls = [];
 
-                // Wait for all promises to resolve
-                await Promise.all(fileUploadData.map(data => data.promise));
-                // Initialize global.name array if it's not already initialized
-                if (!global.name) {
-                    global.name = [];
-                }
+            // Upload files to S3 and store their URLs
+            for (let index = 0; index < files.length; index++) {
+                const file = files[index];
+                const destinationFilename = `${userid}_${vid}_${index}`;
+                const params = {
+                    Bucket: 'myqucckt',
+                    Key: destinationFilename,
+                    Body: file.buffer,
+                    ContentType: file.mimetype
+                };
+                const data = await s3.upload(params).promise();
+                uploadedFileUrls.push(data.Location);
+            }
 
-                // Now you can access destinationFilename outside of the mapping function
-                fileUploadData.forEach(data => {
-                    const name = "https://myqucckt.s3.ap-south-1.amazonaws.com/"+data.filename;
-                    global.name.push(name); // Add this line to the array
-                });
-                console.log(name);
             // Create a new vehicle instance
             const newVehicle = new VehicleModel({
-                files: global.name,
+                files: uploadedFileUrls,
                 vid,
                 uid: userid,
                 title,
@@ -95,6 +87,7 @@ const post = async (req, res, next) => {
                 regyear,
                 plate,
                 price,
+                description,
                 negotiable,
                 condition,
                 mileage,
@@ -106,6 +99,7 @@ const post = async (req, res, next) => {
 
             // Save the vehicle to the database
             await newVehicle.save();
+
             // Redirect to the product page
             res.redirect(`/product?id=${vid}`);
         });

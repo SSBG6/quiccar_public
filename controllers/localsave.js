@@ -52,6 +52,12 @@ const post = async (req, res, next) => {
 
             // Generate unique vehicle ID
             const vid = generateVid();
+            let nvid = vid;
+            const existingVehicle = await VehicleModel.findOne({ vid });
+            if (existingVehicle) {
+                nvid = generateVid();
+            }
+            vid = nvid;
             const files = req.files;
             
             // Define a global array to store both promises and filenames

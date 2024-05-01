@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Quiccar</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Custom CSS -->
   <link rel="stylesheet" type="text/css" href="allstyles.css">
   <link rel="stylesheet" type="text/css" href="index.css">
-<link rel="stylesheet" type="text/css" href="main.css">
-<link rel="stylesheet" type="text/css" href="form.css">
-    <title>Quiccar</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link rel="stylesheet" type="text/css" href="form.css">
+  <style>
+    /* Custom styles can go here */
+  </style>
 </head>
 <body>
-<%- include('Navbar') %>
-<section>
+  <!-- Navbar -->
+  <%- include('Navbar') %>
+
+  <section>
     <div class="container">
-        <form action="/login" method="POST"><!-- cred coz Username and email are both -->
-            <label for="cred">Email or Username:</label> 
-            <input type="text" id="cred" name="cred" required><br><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br><br>
-            <input type="submit" value="Login">
-        </form>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form action="/login" method="POST" class="needs-validation" novalidate>
+            <div class="form-group">
+              <label for="cred">Email or Username:</label> 
+              <input type="text" class="form-control" id="cred" name="cred" required>
+              <div class="invalid-feedback">
+                Please enter your email or username.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+              <div class="invalid-feedback">
+                Please enter your password.
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+        </div>
+      </div>
     </div>
-</section>
-<%- include('Footer') %>
+  </section>
+
+  <!-- Footer -->
+  <%- include('Footer') %>
+
+  <!-- Bootstrap JS (optional) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

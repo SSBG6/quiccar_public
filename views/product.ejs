@@ -13,7 +13,7 @@
     <section>
     <div class="container mt-5">
         <div class="listing-info mb-4">
-            <h1><%= title %></h1>
+            <h1 style="text-transform: capitalize;"><%= title %></h1>
             <p>Posted at <%= time %> by <%= name %></p>
         </div>
         
@@ -40,8 +40,12 @@
         <% } %>
         
         <div class="pricing mt-4">
-            <p>Price: <strong><%= price %></strong></p>
-            <p>Negotiable: <%= negotiable %></p>
+            <p>Price: <strong>LKR: <%= price.toLocaleString() %></strong></p>
+            <% if (negotiable === true) { %>
+                <p>Negotiable</p>
+            <% } %>
+            <button id="contactButton" onclick="toggleContact()">Show Contact</button>
+            <p id="contactInfo" style="display: none;">Contact: <strong><a href="tel:<%= phone %>"><%= phone %></a></strong></p>
         </div>
         <div class="location mt-4">
             <p>Location: <%= location %></p>
@@ -51,9 +55,9 @@
             <p>Model: <%= model %></p>
             <p>Trim: <%= trim %></p>
             <p>Year: <%= year %></p>
-            <p>Registration: <%= ryear %></p>
+            <p>Registration: <%= reg %></p>
             <p>Plate: <%= plate %></p>
-            <p>Mileage: <%= mileage %></p>
+            <p>Mileage: <%= mileage.toLocaleString() %></p>
             <p>Condition: <%= condition %></p>
             <p>Exterior: <%= exterior %></p>
             <p>Interior: <%= interior %></p>
@@ -78,4 +82,12 @@
             wrap: true // Allow carousel to loop (optional)
         });
     });
+    function toggleContact() {
+        var contactInfo = document.getElementById('contactInfo');
+        if (contactInfo.style.display === 'none') {
+            contactInfo.style.display = 'block';
+        } else {
+            contactInfo.style.display = 'none';
+        }
+    }
 </script>

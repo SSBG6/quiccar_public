@@ -3,6 +3,7 @@ const UserModel = require('../models/user'); // Import UserModel
 const AuctionModel = require('../models/auction');
 const BidModel = require('../models/bid');
 const moment = require('moment');
+const auction = require('../models/auction');
 module.exports = {
     post: async (req, res) => {
         const auctionid = req.query.id;
@@ -64,6 +65,12 @@ module.exports = {
 
                 // Now highestBidderId contains the ID of the highest bidder
                 console.log("Highest bidder ID:", highestBidderId);
+                if (highestBidderId) {
+                    
+                    auctid.highestbidder = highestBidderId;
+                    await auctid.save();
+                    console.log(auctid.highestbidder);
+                }
             }
 
             console.log(timeLeft);

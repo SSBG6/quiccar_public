@@ -48,14 +48,19 @@
                         <% } else { %>
                             <p>Current Bid: <strong><%= data.hbid %></strong></p>
                         <% } %>
-                        <p>Time Left: <strong><%= data.time %></strong></p>
+                        <% if (data.status !== 'closed') { %>
+                            <p>Time Left: <strong><%= data.time %></strong></p>
+                        <% } %>
                         <form action="/makebid" method="POST">
                             <div class="form-group">
                                 <input type="hidden" id="idauc" name="idauc" value="<%= data.id %>">
-                                <label for="year">Your Bid:</label>
-                                <input type="number" class="form-control" id="cbid" name="cbid" value="<%= data.hbid %>" required step="25000" min="<%= data.hbid + 25000 %>">
+                                
+                                <% if (data.status !== 'closed') { %>
+                                    <label for="year">Your Bid:</label>
+                                    <input type="number" class="form-control" id="cbid" name="cbid" value="<%= Math.ceil(data.reserve * 0.35) %>" required step="25000" min="<%= data.hbid + 25000 %>">
+                                <% } %>
                                 <% if (data.status === 'closed') { %>
-                                    <button type="submit" class="btn btn-primary" disabled>Auction Concluded</button>
+                                    <button type="submit" class="btn btn-danger" disabled>Auction Ended</button>
                                 <% } else { %>
                                     <button type="submit" class="btn btn-primary">Make Bid</button>
                                 <% } %>

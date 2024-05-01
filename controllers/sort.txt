@@ -1,22 +1,26 @@
 [
   {
-    "filepath": "test_3.jpg",
-    "score": 75
-  },
-  {
-    "filepath": "test_4.jpg",
-    "score": 75
+    "filepath": "test_1.jpg",
+    "score": 0
   },
   {
     "filepath": "test_2.jpg",
-    "score": 0
+    "score": -25
+  },
+  {
+    "filepath": "test_3.jpg",
+    "score": -25
+  },
+  {
+    "filepath": "test_4.jpg",
+    "score": null
   },
   {
     "filepath": "test_5.jpg",
-    "score": 0
+    "score": null
   },
   {
-    "filepath": "test_1.jpg",
-    "score": -25
+    "filepath": "test_6.jpg",
+    "score": null
   }
 ]

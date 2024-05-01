@@ -4,18 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %>: Quiccars</title>
-    <link rel="stylesheet" href="allstyles.css">
-    <link rel="stylesheet" type="text/css" href="products.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
+    <!-- Navbar -->
     <%- include('Navbar') %>
-    <br><br>
-    <section class="listing-info">
-        <h1><%= title %></h1>
-        <p>Posted at <%= time %> by <%= user %></p>
-        <h2> <%= content %> </h2>
-        <p> <% tags %> </p>
+    <section>
+        <div class="container mt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">#<%= tags %></p>
+                            <h4 class="card-title"><%= title %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted at <%= time %> by <%= user %></h6>
+                            <p class="card-text"><%= content %></p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
+    <!-- Comment Section -->
+    <div class="container mt-4">
+        <div class="card-body">
+            <h5 class="card-title">Comments</h5>
+            <hr>
+            <!-- Comment Form -->
+            <form>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea class="form-control" id="comment" rows="3" placeholder="Enter your comment"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <hr>
+            <!-- Comment List -->
+            <div class="comment-list">
+                <!-- Individual comments will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
     <%- include('Footer') %>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

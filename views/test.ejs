@@ -4,36 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiccars</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
     <link rel="stylesheet" href="allstyles.css">
-    <link rel="stylesheet" type="text/css" href="imagepages.css">
-    <link rel="stylesheet" type="text/css" href="products.css">
 </head>
 <body>
     <%- include('Navbar') %>
-    <section>
-        <form method="post" action="/submit">
-            <!-- Make -->
-            <label for="make">Make:</label>
-            <input type="text" id="make" name="make"><br><br>
+    <section class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form method="post" action="/submit">
+                    <!-- Make -->
+                    <div class="form-group">
+                        <label for="make">Make:</label>
+                        <input type="text" id="make" name="make" class="form-control">
+                    </div>
 
-            <!-- Model -->
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model"><br><br>
+                    <!-- Model -->
+                    <div class="form-group">
+                        <label for="model">Model:</label>
+                        <input type="text" id="model" name="model" class="form-control">
+                    </div>
 
-            <!-- Year -->
-            <label for="year">Year:</label>
-            <input type="text" id="year" name="year"><br><br>
+                    <!-- Year -->
+                    <div class="form-group">
+                        <label for="year">Year:</label>
+                        <input type="text" id="year" name="year" class="form-control">
+                    </div>
 
-            <!-- Condition -->
-            <label for="condition">Condition:</label>
-            <select id="condition" name="condition">
-                <option value="new">New</option>
-                <option value="used">Used</option>
-                <option value="refurbished">Refurbished</option>
-            </select><br><br>
+                    <!-- Condition -->
+                    <div class="form-group">
+                        <label for="condition">Condition:</label>
+                        <select id="condition" name="condition" class="form-control">
+                            <option value="new">New</option>
+                            <option value="used">Used</option>
+                            <option value="refurbished">Refurbished</option>
+                        </select>
+                    </div>
 
-            <input type="submit" value="Submit">
-        </form>
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
     </section>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

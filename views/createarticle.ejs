@@ -15,18 +15,18 @@
             Create a Post
           </div>
           <div class="card-body">
-            <form>
+            <form method="post" action="/savearticle">
               <div class="form-group">
-                <label for="postTitle">Title</label>
+                <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
               </div>
               <div class="form-group">
                 <label for="postContent">Content</label>
-                <textarea class="form-control" id="postContent" rows="5" placeholder="Enter post content"></textarea>
+                <textarea class="form-control" id="text" name="text" rows="5" placeholder="Enter post content"></textarea>
               </div>
               <div class="form-group">
-                <label for="postTags">Tags</label>
-                <select class="form-control" id="postTags">
+                <label for="tags">Catergory</label>
+                <select class="form-control" id="tags" name="tags">
                   <option>Vehicles</option>
                   <option>Parts</option>
                   <option>Other</option>

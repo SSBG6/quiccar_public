@@ -19,7 +19,6 @@ module.exports = {
             }
 
         
-
         // Generate unique article ID
         const articleId = generateArticleId();
 
