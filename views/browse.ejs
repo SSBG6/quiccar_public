@@ -3,64 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <head>
-        <link rel="stylesheet" type="text/css" href="allstyles.css">
-        <link rel="stylesheet" type="text/css" href="index.css">
-        <link rel="stylesheet" type="text/css" href="main.css">
-        
-        <title>Quiccar</title>
-    </head>
+    <link rel="stylesheet" type="text/css" href="allstyles.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    
+    <title>Quiccar</title>
+    <style>
+       /* Custom CSS for the browse section */
+.browse-section {
+    padding: 50px 0;
+    z-index: 1;
+}
+
+/* Card styles */
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 0.9rem;
+}
+
+/* Carousel styles */
+.carousel-inner {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 30vh;
+    object-fit: scale-down;
+}
+
+/* Adjusting carousel size */
+.carousel {
+    height: 25vh;
+    max-width: 200px; /* Adjust this value to your preference */
+    margin: 0 auto;
+}
+
+/* List style */
+.card {
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+
+    transform: scale(1.2);
+}
+
+
+    </style>
 </head>
 <body>
+    <!-- Include Navbar -->
     <%- include('Navbar') %>
-    <section>
-        <h1>Browse Vehicles</h1>
-        <ul>
-            <% vehicles.forEach(vehicle => { %>
-            <li>
-                <a href="/product?id=<%= vehicle.vid %>"><%= vehicle.title %></a>
-            </li>
-            <% }); %>
-        </ul>
+    
+    <h1>Browse Vehicles</h1>
+    <section class="browse-section">
+        <div class="container">
+            <div class="row">
+                <% vehicles.forEach(vehicle => { %>
+                <div class="col-lg-4 col-md-6 mb-4" href ="/product?id=<%= vehicle.vid %>">
+                    <div class="card h-100 border-0">
+                        <div class="card-img-top">
+                            <div id="carousel<%= vehicle.vid %>" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <% vehicle.files.slice(0, 3).forEach((link, index) => { %>
+                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                        <img src="<%= link.trim() %>" class="d-block w-100" alt="Image <%= index + 1 %>">
+                                    </div>
+                                    <% }); %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="/product?id=<%= vehicle.vid %>" class="text-decoration-none text-dark"><%= vehicle.title %></a></h5>
+                            <p class="card-text">Mileage: <%= vehicle.mileage.toLocaleString() %></p>
+                            <p class="card-text">Location: <%= vehicle.location %></p>
+                            <p class="card-text">Price: <strong>LKR <%= vehicle.price.toLocaleString() %></strong></p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
     </section>
+    
+
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the Bootstrap Carousel
+            var myCarousel = document.getElementById('carouselExampleIndicators');
+            var carousel = new bootstrap.Carousel(myCarousel, {
+                interval: 5000, // Change slide every 5 seconds (optional)
+                wrap: true // Allow carousel to loop (optional)
+            });
+        });
+    </script>
 </body>
 </html>
-
-
-<style>
-    /* styles.css */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-h1 {
-    color: #333;
-}
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-}
-
-a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-</style>

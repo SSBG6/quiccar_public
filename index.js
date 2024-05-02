@@ -156,9 +156,15 @@ app.post('/makebid', async (req, res) => {
 app.get('/browse', async (req, res) => {
     try {
         const vehicles = await VehicleModel.find();
-        // Render a page to display all articles
-        console.log(vehicles);
-        res.render('browse', { vehicles });
+        const data = { 
+            title: vehicles.title,
+            price: vehicles.price,
+            milage: vehicles.milage,
+            location: vehicles.location,
+            time: vehicles.time,
+            files: vehicles.files,
+        };
+        res.render('browse', { vehicles:vehicles });
     } catch (error) {
         // Handle error
         console.error(error);
