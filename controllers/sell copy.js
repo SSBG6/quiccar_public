@@ -97,7 +97,7 @@ const post = async (req, res, next) => {
                 time: moment().format('YYYY-MM-DD HH:mm:ss')
             });
 
-            // Save the vehicle to the database
+            
             await newVehicle.save();
 
             // Redirect to the product page

@@ -49,7 +49,6 @@ const vehicleSchema = new Schema ({
     },
     negotiable: {
         type: String,
-        required: true
     },
     condition: {
         type: String,

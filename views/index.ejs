@@ -17,7 +17,7 @@
           <img src="https://i.imgur.com/ngbgaHL.png" alt="Buy">
           <div class="overlay">
             <div class="card-text element">
-              <h1>Buy</h1>
+              <h1 class="hm">Buy</h1>
               <p>Find the perfect car for you</p>
             </div>
           </div>
@@ -28,7 +28,7 @@
           <img src="https://i.imgur.com/V8Li4WE.png" alt="Sell">
           <div class="overlay">
             <div class="card-text element">
-              <h1>Sell</h1>
+              <h1 class="hm">Sell</h1>
               <p>Get the best price for your car</p>
             </div>
           </div>
@@ -39,7 +39,7 @@
           <img src="https://i.imgur.com/l6ymuOQ.png" alt="Community">
           <div class="overlay">
             <div class="card-text element">
-              <h1>Community</h1>
+              <h1 class="hm">Community</h1>
               <p>Join the Quiccar community</p>
             </div>
           </div>
@@ -122,5 +122,18 @@
       color: #fff;
     }
   
+    @media screen and (max-width: 600px) {
+      .element h1{
+      position: absolute;
+      right: 20px;
+      color: #fff;
+      font-size: 150px;
+      transform: rotate(-90deg);
+      font-weight: bold;
+      }
+      .option{
+        height: 40vh;
+      }
+    }
   </style>
 

@@ -56,6 +56,12 @@ app.use(express.static('public/imgs'));
 //complete the signup process
 const sign = require('./controllers/signup.js');
 app.post('/signup',sign.post);
+//ai image sort
+const img = require('./controllers/orderimage.js');
+app.get('/orderimg', async (req, res) => {
+    await img.post(req, res); 
+});
+
 
 //login
 const log = require('./controllers/login.js');
@@ -65,6 +71,8 @@ app.post('/login',log.post);
 const edit = require('./controllers/updateacc.js');
 app.post('/updateacc',edit.post);
 
+const editv = require('./controllers/editveh.js');
+app.post('/editv',editv.post);
 //edit password
 const epass = require('./controllers/updpass.js');
 app.post('/updatepass',epass.post);
@@ -78,8 +86,13 @@ const verify = require('./controllers/verify.js');
 app.post('/signup-verification-code',verify.post);
 
 //create a vehicle record
+const aiimage = require('./controllers/ogsort.js');
 const vehicle = require('./controllers/sell.js');
 app.post('/savevehicle',vehicle.post);
+// app.post('/savevehicle', async (req, res) => {
+//     const results = await aiimage.post(req, res);
+//     await vehicle.post(req, res, results); 
+// });
 
 //create an auction record
 const auction = require('./controllers/createauction.js');
@@ -92,6 +105,12 @@ app.post('/sort',save.post);
 app.get('/product', async (req, res) => {
     await getVehicle.post(req, res); 
 });
+const eveh = require('./controllers/eveh.js'); 
+app.get('/edveh', async (req, res) => {
+    await eveh.post(req, res); 
+});
+
+
 //auction page
 const getAuc = require('./controllers/getAuction.js');
 app.get('/auction', async (req, res) => {
@@ -160,6 +179,8 @@ app.get('/auct', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+
 //user profile
 app.get('/profile', async (req, res) => {
     try {
@@ -188,6 +209,8 @@ app.get('/profile', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+//edit vehicle
+
 
 app.get('/settings', async (req, res) => {
     try {
@@ -243,6 +266,11 @@ app.post('/savearticle',savearticle.post);
 app.get('/article', async (req, res) => {
     await getarticle.post(req, res); 
 });
+// tes
+const manimord = require('./controllers/manimord.js');
+manimord.post();
+
+
 
 //generation ai title
 const titlegen = require('./controllers/gentitle.js');
@@ -252,6 +280,7 @@ app.post('/gen', async (req, res) => {
 const des = require('./controllers/gendes.js');
 app.post('/gendes', async (req, res) => {
     await des.post(req, res); });
+
 async function runServer() {
     try{//server
         app.listen(port, () => {
@@ -272,4 +301,3 @@ async function runServer() {
 
 
 runServer();
-

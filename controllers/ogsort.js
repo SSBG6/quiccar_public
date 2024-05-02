@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const { exec } = require('child_process');
 
-const uploadedFiles = []; // Array to store objects with filepath:score
+const uploadedFiles = []; // Array to store objects with filename:score
 
 const uploadPath = path.join(__dirname, 'uploads');
 
@@ -20,7 +20,7 @@ const upload = multer({
         filename: (req, file, cb) => {
             const index = uploadedFiles.length + 1;
             const fileName = `test_${index}${path.extname(file.originalname)}`;
-            uploadedFiles.push({ filepath: fileName, score: null }); // Initialize score as null
+            uploadedFiles.push({ filename: file.originalname, score: null }); // Initialize score as null
             cb(null, fileName);
         }
     }),
@@ -45,6 +45,10 @@ const processFile = async (file, index) => {
     try {
         const score = await runPythonScript(filePath);
         uploadedFiles[index].score = score; // Update the score in the object
+        
+        // Delete the file after processing
+        await fs.unlink(filePath);
+        console.log(`Deleted file: ${filePath}`);
     } catch (error) {
         console.error('Error processing file:', error);
     }
@@ -68,45 +72,16 @@ const post = async (req, res, next) => {
             // Process each uploaded file
             await Promise.all(req.files.map((file, index) => processFile(file, index)));
 
-            // Save uploaded files
-            await saveUploadedFiles();
-            
-            res.redirect('/sell'); // Redirect to '/sell'
+            // Sort uploaded files in descending order based on score
+            uploadedFiles.sort((a, b) => b.score - a.score);
+
+            // Console log the sorted array
+            console.log('Sorted files:', uploadedFiles);
+            res.send(uploadedFiles);
         });
     } catch (error) {
         console.error('Error processing request:', error);
         res.status(500).send(`An error occurred while processing your request: ${error.message}`);
-    }
-};
-
-const saveUploadedFiles = async () => {
-    const jsonContent = JSON.stringify(uploadedFiles, null, 2);
-    const filePath = path.join(__dirname, 'sort.txt');
-    
-    try {
-        await fs.writeFile(filePath, jsonContent);
-        console.log('Uploaded files saved to sort.txt');
-        // Modify the file paths after initial saving
-        await modifyFilePaths();
-    } catch (err) {
-        console.error('Error saving uploaded files:', err);
-    }
-};
-
-const modifyFilePaths = async () => {
-    try {
-        const filePath = path.join(__dirname, 'sort.txt');
-        const data = await fs.readFile(filePath, 'utf8');
-        const parsedData = JSON.parse(data);
-        // Update file paths
-        parsedData.forEach((file, index) => {
-            parsedData[index].filepath = `${file.filepath}`;
-        });
-        // Save modified data back to the file
-        await fs.writeFile(filePath, JSON.stringify(parsedData, null, 2));
-        console.log('File paths modified in sort.txt');
-    } catch (err) {
-        console.error('Error modifying file paths:', err);
     }
 };
 
