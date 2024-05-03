@@ -3,7 +3,7 @@ const fs = require('fs');
 
 module.exports = {
     post: async (req, res) => { 
-        const { title, make, model, trim, year, regyear, plate, price, negotiable, condition, mileage, exterior, interior, location } = req.body; 
+        const { title, make, model, trim, year, regyear, plate, price, condition, mileage, exterior, interior, location } = req.body; 
         function gen(make, model, year, price, condition, mileage, exterior, interior) {
             return new Promise((resolve, reject) => {
                 exec(`python des.py ${year} ${make} ${model} ${price} ${condition} ${mileage} ${exterior} ${interior}`, (error, stdout) => {
@@ -36,7 +36,6 @@ module.exports = {
                 regyear:regyear,
                 plate:plate,
                 price:price,
-                negotiable:negotiable,
                 condition:condition,
                 mileage:mileage,
                 exterior:exterior,

@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const commentSchema = new Schema ({
-    userid: {
+    uid: {
+        type: String,
+        required: true,
+    },
+    cid:{
         type: String,
         required: true,
         unique:true
@@ -10,19 +14,10 @@ const commentSchema = new Schema ({
     comment: {
         type: String,
         required: true,
-        unique:true
     },
     created : {
         type: String,
-        unique:true,
-    },
-    reply: {
-        type:Boolean,
-        required:true,
-    },
-    replyid: {
-        type: String,
-        required: true,
+        
     },
     artid: {
         type: String,

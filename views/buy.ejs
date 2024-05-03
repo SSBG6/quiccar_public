@@ -9,16 +9,132 @@
 </head>
 <body>
     <%- include('navbar.ejs') %>
+  
+    <section>
+        <div class="container">
+            <div class="options-container">
+                <div class="option buy" onclick="window.location.href = 'browse'">
+                    <div class="overlay-text">Browse Cars</div>
+                    <img src="https://myqucckt.s3.ap-south-1.amazonaws.com/row-new-cars-port+(1).jpg" alt="Buy">
+                    <div class="overlay">
+                        <div class="card-text element">
+                            <h1 class="hm">Browse?</h1>
+                            <p>Find the perfect car for you</p>
+                        </div>
+                    </div>
+                </div>
     
-    <section id="buy">
-        <div>
-            <a href="browse">Buy Now</a>
-            <a href="auct">Browse Auctions</a>
-        </div>
-    </section>
+            <div class="option sell" onclick="window.location.href = 'auct'">
+                <div class="overlay-text">Browse Auctions</div>
+                <img src="https://myqucckt.s3.ap-south-1.amazonaws.com/large-group-people-sitting-auditorium-watching-presentation-generated-by-ai.jpg" alt="Sell">
+                <div class="overlay">
+                    <div class="card-text element">
+                        <h1 class="hm">Auctions?</h1>
+                        <p>Pay the best for your car</p>
+                    </div>
+                </div>
+            </div>
     
+      </section>
+     
     <%- include('footer.ejs') %>
-    
-    <script src="script.js"></script>
+
+ 
 </body>
 </html>
+
+<style> 
+.options-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .option {
+    top: 20px;
+    position: relative;
+    overflow: hidden;
+    width: 300px;
+    height: 60vh;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+    cursor: pointer;
+  }
+
+  .option:hover {
+      transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .option img {
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .overlay-text {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .option:hover .overlay {
+    opacity: 1;
+  }
+
+  .card-text {
+    color: #fff;
+  }
+
+  @media screen and (max-width: 600px) {
+    .overlay-text{
+        display: none;
+    }
+    .element h1{
+    position: absolute;
+    left: 5px;
+    color: #fff;
+    font-size: 100%;
+    transform: rotate(-90deg);
+    font-weight: bold;
+    }
+    .element p{
+        bottom: 20px;
+        font-size: 100%;
+        font-weight: bold;
+    }
+    .option{
+      height: 40vh;
+    }
+    footer{
+        display: none;
+    }
+  }
+</style>
+

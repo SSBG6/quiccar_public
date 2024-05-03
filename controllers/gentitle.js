@@ -12,7 +12,7 @@ module.exports = {
                         reject(error);
                         return;
                     }
-                    resolve(stdout.trim()); // Trim any whitespace from the title
+                    resolve(stdout.trim()); 
                 });
             });
         }
@@ -28,36 +28,6 @@ module.exports = {
                 year: year,
                 condition: condition,
             };
-
-            //sorting the images based on
-            fs.readFile('./controllers/sort.txt', 'utf8', (err, jsonString) => {
-                if (err) {
-                    console.log('Error reading file:', err);
-                    return;
-                }
-              
-                try {
-                    // Parse the JSON data
-                    const data = JSON.parse(jsonString);
-                
-                    // Sorting function to sort by score
-                    data.sort((a, b) => b.score - a.score);
-                
-                    // Convert the sorted data back to JSON string
-                    const sortedJsonString = JSON.stringify(data, null, 2);
-                
-                    // Write the sorted JSON back to the file
-                    fs.writeFile('./controllers/sort.txt', sortedJsonString, 'utf8', (err) => {
-                        if (err) {
-                            console.log('Error writing file:', err);
-                            return;
-                        }
-                        console.log('File sorted and saved successfully.');
-                    });
-                } catch (err) {
-                    console.log('Error parsing JSON data:', err);
-                }
-            });
         
             console.log(data.title);
             res.render('ai1_restofinfo', { data: data });

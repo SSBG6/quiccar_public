@@ -5,7 +5,7 @@ const JWT_SECRET = require('../controllers/config');
 
 module.exports = {
     post: async (req, res) => {
-        // Validate request body
+        
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -14,10 +14,10 @@ module.exports = {
         const { email } = req.body;
 
         try {
-            // Generate a JWT token containing the email address
+            // Generate a jwt token 
             const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '5m' });
             
-            // Setup nodemailer transporter
+            // Setup nodemailer 
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {

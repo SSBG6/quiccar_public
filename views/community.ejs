@@ -6,19 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community</title>
 </head>
+<style>
+    
+</style>
 <body>
     <%- include('Navbar') %>
     
-    <section>
-        <h1>Browse Community</h1>
-        <ul>
+    <section class="container">
+        <h1 class="mt-5 mb-4">Browse Community</h1>
+        <ul class="list-group">
+            <a href="/createarticle" class="btn btn-primary mb-3">Create Article</a>
             <% articles.forEach(article => { %>
-            <li>
-                <a href="/article?id=<%= article.artid %>"><%= article.title %></a>
+            <li class="list-group-item">
+                <a href="/article?id=<%= article.artid %>" class="text-decoration-none">
+                    <%= article.title %>
+                </a>
+                <p class="m-0">Posted by: <%= article.user %></p>
+                <p class="m-0">at: <%= article.time %></p>
             </li>
             <% }); %>
         </ul>
-        <a href="/createarticle">create</a>
     </section>
 </body>
 </html>

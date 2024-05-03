@@ -1,13 +1,12 @@
 import cv2
 import numpy as np
 import torch
-from PIL import Image
+import sys
 
-# Load YOLOv5 model
 try:
-    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
+     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=True)
 except Exception as e:
-    print("Error loading YOLOv5 model:", e)
+    print("Error loading model:", e)
     exit()
 
 # Function to detect objects using YOLOv5
@@ -19,12 +18,12 @@ def detect_objects(image):
     vehicle_classes = ['car', 'bus', 'motorcycle', 'bike', 'truck', 'lorry', 'van']
     vehicle_confidence = sum(1 for detection in detections if classes[int(detection[5])] in vehicle_classes and detection[4] > 0.75)
     
-    if vehicle_confidence >= 0.75:
-        return 100
+    if vehicle_confidence >= 0.5:
+        return vehicle_confidence*100
     elif vehicle_confidence == 0:
         return 0
     else:
-        return 80
+        return vehicle_confidence*0.7
 
 # Function to compute edge clarity score
 def compute_edge_clarity_score(image):
@@ -37,13 +36,13 @@ def compute_edge_clarity_score(image):
 # Function to interpret edge clarity score
 def interpret_clarity_score(score):
     if score >= 0.062:
-        return "Excellent clarity"
+        return "e"
     elif score >= 0.061:
-        return "Good clarity"
+        return "g"
     elif score >= 0.06:
-        return "Average clarity"
+        return "a"
     else:
-        return "Poor clarity"
+        return "p"
 
 # Main function
 def main(image_path):
@@ -75,12 +74,16 @@ def main(image_path):
 
     # Calculate total score
     total_score = car_confidence_score
-    if interpretation != "Poor clarity":
+    if interpretation != "p":
         total_score -= 25
-
+    if interpretation != "a":
+            total_score += 0
+    if interpretation != "g":
+            total_score += 25
+    if interpretation != "e":
+            total_score += 50                
     print( total_score)
 
-import sys
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

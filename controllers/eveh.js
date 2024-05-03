@@ -38,6 +38,7 @@ module.exports = {
                 price: vehicle.price,
             };
             res.render('edvehicle', {data:data} );
+            
         } catch (error) {
             console.error(error);
             res.status(500).send('Internal Server Error');

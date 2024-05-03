@@ -87,10 +87,16 @@
                 </div>
                 <ul class="list-group">
                     <% auctions.forEach(auction => { %>
+                        <%= auction.highestbidder %>
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="/auction?id=<%= auction.aucid %>"><%= auction.title %></a>
-                            <a href="/aucstatus?id=<%= auction.aucid %>" class="btn btn-sm"><%= auction.status %></a>
+                            <% if (auction.status === 'closed') { %>
+                                <a >Auction Status<%= auction.status %></a>
+                                <a>Winner <%= auction.highestbidder %></a>
+                            <% } else { %>
+                                <a href="/aucstatus?id=<%= auction.aucid %>" class="btn btn-sm"><%= auction.status %></a>
+                            <% } %>
                         </div>
                     </li>
                     <% }); %>
@@ -102,13 +108,14 @@
                     <h2>My Comments</h2>
                 </div>
                 <ul class="list-group">
-                    <!-- Placeholder for comments -->
+                    <% comments.forEach(comment => { %>
                     <li class="list-group-item">
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href=""></a>
-                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                            <a><%= comment.content %></a>
+                            <a href="/dcomment?id=<%= comment.cid %>" class="btn btn-sm"><%= co.status %></a>
                         </div>
                     </li>
+                    <% }); %>
                 </ul>
             </div>
         </div>

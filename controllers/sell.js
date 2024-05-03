@@ -71,7 +71,7 @@ const post = async (req, res, next) => {
                 uploadedFileUrls.push(data.Location);
             }
             
-            console.log(description)
+            const capitals=description.charAt(0).toUpperCase() + description.slice(1);
             // Create a new vehicle instance
             const newVehicle = new VehicleModel({
                 files: uploadedFileUrls,
@@ -85,7 +85,7 @@ const post = async (req, res, next) => {
                 regyear,
                 plate,
                 price,
-                description,
+                description: capitals,
                 negotiable,
                 condition,
                 mileage,

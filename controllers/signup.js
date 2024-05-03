@@ -3,7 +3,7 @@ const UserModel = require("../models/user.js");
 const bcrypt = require('bcryptjs');
 const moment = require('moment');
 
-//time
+
 const currentDateAndTime = moment();
 const formattedDateTime = currentDateAndTime.format('YYYY-MM-DD HH:mm:ss');
 
@@ -20,11 +20,12 @@ module.exports = {
         // Generate unique user ID
         const userId = generateUserId();
         console.log(userId);
-        // Setting the default role if not provided
+        
+        //FUTURE WORKS ADMINS SUPER USERS MODERATORS
         const userRole = 'default';
 
         // Hashing the password
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds
+        const hashedPassword = await bcrypt.hash(password, 10); 
         console.log(hashedPassword);
         user = new UserModel({
             userid: userId,
@@ -34,7 +35,7 @@ module.exports = {
             role: userRole,
             phone,
             created: formattedDateTime,
-            // status field will remain blank
+          
         });
 
         // Save the user to the database

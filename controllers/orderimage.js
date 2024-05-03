@@ -68,7 +68,7 @@ module.exports = {
 
             // Update the vehicle record with the updated file URLs
             await VehicleModel.updateOne({ vvid }, { files: updatedFiles });
-
+            res.redirect(`/product?id=${vvid}`);
             console.log('Vehicle record updated successfully');
         } catch (error) {
             console.log(error);

@@ -8,6 +8,7 @@ module.exports = {
         try {
             const deletedVehicle = await VehicleModel.findOneAndDelete({ vid: id });
             const delauc = await AuctionModel.findOneAndDelete({ vid: id });
+            console.log(deletedVehicle);
             if (!deletedVehicle) {
                 return res.status(404).json({ message: "Vehicle not found" });
             }

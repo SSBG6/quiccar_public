@@ -6,11 +6,10 @@ module.exports = {
     post: async (req, res) => {
         try {
             const { title, time, make, model, trim, year, reg, plate, mileage, condition, exterior, interior, location, description, price, files, vid} = req.body;
-            console.log(title, time, make, model, trim, year, reg, plate, mileage, condition, exterior, interior, location, description, price, files, vid);
-            console.log(vid);
+            
             const vehicle = await VehicleModel.findOne({ vid:vid });
             if (!vehicle) {
-                return res.status(404).send('Vehicle not found');
+                return res.status(401).send('<script>alert("no vehicle found"); window.location.href="/profile";</script>');
             }
             vehicle.files = files;
             vehicle.title = title;

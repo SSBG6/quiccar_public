@@ -76,6 +76,7 @@ module.exports = {
             console.log(timeLeft);
             console.log(highestBid);
             const data = {
+                highestbidder: auctid.highestbidder,
                 hbid: highestBid,
                 id: auctid.aucid,
                 user: user.username,

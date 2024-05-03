@@ -36,18 +36,22 @@
         <div class="card-body">
             <h5 class="card-title">Comments</h5>
             <hr>
-            <!-- Comment Form -->
-            <form>
+            <!-- comment.js -->
+            <form method="post" action="/comment"> 
                 <div class="form-group">
                     <label for="comment">Comment</label>
-                    <textarea class="form-control" id="comment" rows="3" placeholder="Enter your comment"></textarea>
+                    <input type="hidden" name="artid" value="<%= artid %>">
+                    <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Make a comment"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
             <hr>
-            <!-- Comment List -->
-            <div class="comment-list">
-                <!-- Individual comments will be dynamically added here -->
+
+            <div class="comment">
+                <h6 class="comment-author"></h6>
+                <p class="comment-content"></p>
+                <p class="comment-time"></p>
+                <hr>
             </div>
         </div>
     </div>

@@ -9,106 +9,115 @@
     
     <title>Quiccar</title>
     <style>
-       /* Custom CSS for the browse section */
-.browse-section {
-    padding: 50px 0;
-    z-index: 1;
-}
+        /* Custom CSS for the browse section */
+        .browse-section {
+            padding: 50px 0;
+        }
 
-/* Card styles */
-.card {
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-}
+        .card-body{
+            background-color: #a4cdff;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(82, 82, 82, 0.1);
+            transition: all 0.3s ease;
+        }
 
-.card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
+        .card:hover {
+            box-shadow: 0px 0px 20px rgba(111, 138, 255, 0.2);
+        }
 
-.card-text {
-    font-size: 0.9rem;
-}
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
 
-/* Carousel styles */
-.carousel-inner {
-    border-radius: 10px;
-    overflow: hidden;
-}
+        .card-text {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
 
-.carousel-item img {
-    height: 30vh;
-    object-fit: scale-down;
-}
+        /* Carousel styles */
+        .carousel-inner {
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-/* Adjusting carousel size */
-.carousel {
-    height: 25vh;
-    max-width: 200px; /* Adjust this value to your preference */
-    margin: 0 auto;
-}
+        .carousel-item img {
+            height: 200px; /* Adjust this value to your preference */
+            object-fit: scale-down;
+            width: 100%;
+        }
 
-/* List style */
-.card {
-    margin-bottom: 30px;
-    transition: all 0.3s ease;
-}
-
-.card:hover {
-
-    transform: scale(1.2);
-}
-
-
+        /* List style */
+        .vehicle-item {
+            border:  none;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        .element{
+            color: aliceblue;
+        }
+        /* Adjusting carousel size */
+        .carousel {
+            height: 200px; /* Adjust this value to your preference */
+        }
     </style>
 </head>
 <body>
     <!-- Include Navbar -->
     <%- include('Navbar') %>
     
-    <h1>Browse Vehicles</h1>
+    <h1 class="text-center mt-5 mb-4">Browse Vehicles</h1>
+
     <section class="browse-section">
         <div class="container">
-            <div class="row">
+            <ul class="list-unstyled row">
                 <% vehicles.forEach(vehicle => { %>
-                <div class="col-lg-4 col-md-6 mb-4" href ="/product?id=<%= vehicle.vid %>">
-                    <div class="card h-100 border-0">
-                        <div class="card-img-top">
-                            <div id="carousel<%= vehicle.vid %>" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <% vehicle.files.slice(0, 3).forEach((link, index) => { %>
-                                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <img src="<%= link.trim() %>" class="d-block w-100" alt="Image <%= index + 1 %>">
-                                    </div>
-                                    <% }); %>
+                <li class="col-lg-4 col-md-6 mb-4 vehicle-item" data-href="/product?id=<%= vehicle.vid %>">
+                    <div class="card">
+                        <div id="carousel<%= vehicle.vid %>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <% vehicle.files.slice(0, 3).forEach((link, index) => { %>
+                                <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                                    <img src="<%= link.trim() %>" class="d-block w-100" alt="Image <%= index + 1 %>">
                                 </div>
+                                <% }); %>
                             </div>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title"><a href="/product?id=<%= vehicle.vid %>" class="text-decoration-none text-dark"><%= vehicle.title %></a></h5>
+                            <h5 class="card-title">
+                                <a href="/product?id=<%= vehicle.vid %>" class="text-decoration-none text-dark"><%= vehicle.title %></a>
+                            </h5>
                             <p class="card-text">Mileage: <%= vehicle.mileage.toLocaleString() %></p>
                             <p class="card-text">Location: <%= vehicle.location %></p>
                             <p class="card-text">Price: <strong>LKR <%= vehicle.price.toLocaleString() %></strong></p>
                         </div>
                     </div>
-                </div>
+                </li>
                 <% }); %>
-            </div>
+            </ul>
         </div>
     </section>
-    
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize the Bootstrap Carousel
-            var myCarousel = document.getElementById('carouselExampleIndicators');
-            var carousel = new bootstrap.Carousel(myCarousel, {
-                interval: 5000, // Change slide every 5 seconds (optional)
-                wrap: true // Allow carousel to loop (optional)
+        document.addEventListener("DOMContentLoaded", function () {
+            // Add click event to entire vehicle item
+            document.querySelectorAll('.vehicle-item').forEach(item => {
+                item.addEventListener('click', function () {
+                    const href = this.getAttribute('data-href');
+                    if (href) {
+                        window.location.href = href;
+                    }
+                });
             });
         });
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

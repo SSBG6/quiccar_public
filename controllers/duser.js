@@ -6,6 +6,7 @@ module.exports = {
         
         try {
             const deletedUser = await UserModel.findOneAndDelete({ userId: id });
+            console.log(deletedUser);
             if (!deletedUser) {
                 return res.status(404).json({ message: "User not found" });
             }

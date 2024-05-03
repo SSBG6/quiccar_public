@@ -87,6 +87,8 @@
                             <textarea class="form-control" id="description" name="description" rows="5" required><%= data.description || '' %></textarea>
                         </div>
                         <h4>Change order to your</h4>
+                        <a href="/orderimg?id=<%= data.vid %>" class="btn btn-primary">YOLO Suggested Pics</a>
+                        <a href="/orderimg2?id=<%= data.vid %>" class="btn btn-primary">Quiccar's Suggested Pics</a>
                         <label for="form-group" class="form-label">Change the order of images:</label>
                         <div class="form-group">
                             <% data.files.forEach(function(file, index) { %>
@@ -99,63 +101,11 @@
                 </div>
                 <button type="submit" class="buttons btn btn-primary">Submit</button>
             </form>
-            <a href="/orderimg?id=<%= data.vid %>" class="btn btn-primary">AI Order Images</a>
         </div>
     </section>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            var imageContainer = $('.form-group');
-    
-            var sortable = Sortable.create(imageContainer[0], {
-                animation: 150,
-                onEnd: function(evt) {
-                    imageContainer.find('.previewImage').each(function(index) {
-                        $(this).attr('data-index', index);
-                    });
-                }
-            });
-    
-            imageContainer.find('.previewImage').each(function(index) {
-                $(this).attr('data-index', index);
-            });
-    
-            function submitForm() {
-                var formData = new FormData($('form')[0]);
-                var files = [];
-    
-                imageContainer.find('.previewImage').each(function() {
-                    var index = $(this).data('index');
-                    files.push(formData.getAll('files')[index]);
-                });
-    
-                formData.delete('files');
-    
-                files.forEach(function(file) {
-                    formData.append('files', file);
-                });
-    
-                $.ajax({
-                    url: '/editv',
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                    },
-                    error: function(xhr, status, error) {
-                    }
-                });
-            }
-    
-            $('buttons').click(function(e) {
-                e.preventDefault();
-                submitForm();
-            });
-        });
-    </script>
 </body>
 </html>

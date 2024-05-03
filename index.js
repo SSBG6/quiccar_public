@@ -61,8 +61,13 @@ const img = require('./controllers/orderimage.js');
 app.get('/orderimg', async (req, res) => {
     await img.post(req, res); 
 });
-
-
+const img2 = require('./controllers/orderimagetrained.js');
+app.get('/orderimg2', async (req, res) => {
+    await img2.post(req, res); 
+});
+//comment
+const comment = require('./controllers/comment.js');
+app.post('/comment',comment.post);
 //login
 const log = require('./controllers/login.js');
 app.post('/login',log.post);
@@ -205,10 +210,14 @@ app.get('/profile', async (req, res) => {
         }
         const auctions = await AuctionModel.find({ oid: usersid });
         if (!auctions) {
-            return res.status(404).send('Article not found');
+            return res.status(404).send('auction not found');
+        }
+        const comments = await AuctionModel.find({ uid: usersid });
+        if (!comments) {
+            return res.status(404).send('auction not found');
         }
         // const comments = await CommentModel.find({ userid: usersid });
-        res.render('account', { vehicles, articles, auctions });
+        res.render('account', { vehicles, articles, auctions,comments });
     } catch (error) {
         // Handle error
         console.error(error);
@@ -255,7 +264,6 @@ app.get('/community', async (req, res) => {
     // Fetch all articles from the database
     try {
         const articles = await ArticleModel.find();
-        // Render a page to display all articles
         res.render('community', { articles });
     } catch (error) {
         // Handle error
@@ -272,11 +280,6 @@ app.post('/savearticle',savearticle.post);
 app.get('/article', async (req, res) => {
     await getarticle.post(req, res); 
 });
-// tes
-const manimord = require('./controllers/manimord.js');
-manimord.post();
-
-
 
 //generation ai title
 const titlegen = require('./controllers/gentitle.js');

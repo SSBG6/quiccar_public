@@ -2,12 +2,11 @@
 from transformers import BertTokenizer, BertForMaskedLM
 import torch
 import sys
-import sys
+
 
 # Function to generate title
 def generate_description(make, model, year, price, condition, mileage, exterior, interior):
-    # Constructing the prompt for BERT
-    prompt = f"This {condition} {year} {make} {model} has [MASK] features and a [MASK] design. Priced at ${price}, it's a {condition} vehicle. With just {mileage} kilometers on the odometer, it promises reliable performance for years to come. Interior {exterior}, Exterior {interior}, Other Notable features:"
+    prompt = f"This {price} {year} {make} {model} has [MASK] features and a [MASK] design, it's a [MASK] {price} vehicle with just kilometers on the [MASK], it promises [MASK], Other Notable features:"
 
     # Load BERT model and tokenizer
     model_name = "bert-base-uncased"
