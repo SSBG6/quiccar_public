@@ -4,7 +4,7 @@ import torch
 import sys
 
 try:
-     model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=True)
+    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 except Exception as e:
     print("Error loading model:", e)
     exit()
