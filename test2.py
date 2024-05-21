@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import torch
 import sys
-
+total_score = 0
 # Load the YOLOv5 model
 def load_model():
     try:
@@ -28,7 +28,8 @@ def detect_objects(image, model):
     try:
         results = model(image)
         detected_objects = results.pandas().xyxy[0]
-        detected_objects = detected_objects[detected_objects['confidence'] == detected_objects['confidence'].max()]
+        detected_objects = detected_objects[detected_objects['confidence']>0.5]
+    
         return detected_objects
     except Exception as e:
         print("Error detecting objects:", e)
@@ -49,15 +50,16 @@ def compute_edge_clarity_score(image):
 # Interpret edge clarity score
 def interpret_clarity_score(score):
     if score >= 0.062:
-        return "e"
+        return 75
     elif score >= 0.061:
-        return "g"
+        return 50
     elif score >= 0.06:
-        return "a"
+        return 25
     else:
-        return "p"
+        return 0
 
-def main(image_path):
+def main():
+    image_path = "test.jpg"  # Replace with the actual image path
     
     image = load_image(image_path)
     if image is None:
@@ -74,12 +76,12 @@ def main(image_path):
 
 
     # Calculate and print total score
-    
-    con = float(detected_objects['confidence'])
-    con2 = int(con*100)
-    # car_confidence_score = vehicle_confidence * 100 if vehicle_confidence >= 0.5 else vehicle_confidence * 0.7 if vehicle_confidence else 0
+    vehicle_classes = ['car', 'bus', 'motorcycle', 'bike', 'truck', 'lorry', 'van']
+    vehicle_confidence = sum([row['confidence'] for _, row in detected_objects.iterrows() if row['name'] in vehicle_classes])
+    print(vehicle_confidence)
+    car_confidence_score = vehicle_confidence * 100 
 
-    total_score = con2
+    total_score = car_confidence_score
     if interpretation == "p":
         total_score -= 25
     elif interpretation == "a":
@@ -91,10 +93,7 @@ def main(image_path):
 
     print(total_score)
 
+
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python ip2.py <image_path>")
-        exit(1)
-    
-    image_path = sys.argv[1]
-    main(image_path)
+    main()

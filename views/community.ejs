@@ -16,13 +16,13 @@
         <h1 class="mt-5 mb-4">Browse Community</h1>
         <ul class="list-group">
             <a href="/createarticle" class="btn btn-primary mb-3">Create Article</a>
-            <% articles.forEach(article => { %>
+            <% cdata.forEach(cdata => { %>
             <li class="list-group-item">
-                <a href="/article?id=<%= article.artid %>" class="text-decoration-none">
-                    <%= article.title %>
+                <a href="/article?id=<%= cdata.artid %>" class="text-decoration-none">
+                    <%= cdata.title %>
                 </a>
-                <p class="m-0">Posted by: <%= article.user %></p>
-                <p class="m-0">at: <%= article.time %></p>
+                <p class="m-0">Posted by: <%= cdata.uname %></p>
+                <p class="m-0">at: <%= cdata.created %></p>
             </li>
             <% }); %>
         </ul>

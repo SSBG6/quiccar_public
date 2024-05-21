@@ -72,7 +72,7 @@ const vehicleSchema = new Schema ({
     }, 
     time: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,

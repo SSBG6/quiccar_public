@@ -64,6 +64,8 @@ module.exports = {
             // Create an array containing only the filenames with the URL prefix
             const updatedFiles = filenameScoreArray.map(entry => `https://myqucckt.s3.ap-south-1.amazonaws.com/${entry[0]}`);
 
+            vehicle.files = updatedFiles;
+            await vehicle.save();
             console.log('Updated Files:', updatedFiles); // Log updated files
 
             // Update the vehicle record with the updated file URLs

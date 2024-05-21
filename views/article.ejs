@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %>: Quiccars</title>
+    <title><%= data.title %>: Quiccars</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="allstyles.css">
@@ -19,10 +19,10 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-body">
-                            <p class="card-text">#<%= tags %></p>
-                            <h4 class="card-title"><%= title %></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Posted at <%= time %> by <%= user %></h6>
-                            <p class="card-text"><%= content %></p>
+                            <p class="card-text">#<%= data.tags %></p>
+                            <h4 class="card-title"><%= data.title %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted at <%= data.time %> by <%= data.username %> </h6>
+                            <p class="card-text"><%= data.content %></p>
                             <hr>
                         </div>
                     </div>
@@ -32,26 +32,35 @@
     </section>
 
     <!-- Comment Section -->
-    <div class="container mt-4">
-        <div class="card-body">
-            <h5 class="card-title">Comments</h5>
-            <hr>
-            <!-- comment.js -->
-            <form method="post" action="/comment"> 
-                <div class="form-group">
-                    <label for="comment">Comment</label>
-                    <input type="hidden" name="artid" value="<%= artid %>">
-                    <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Make a comment"></textarea>
+             
+            <div class="container mt-4">
+                <div class="card-body">
+                    
+                    <hr>
+                    <!-- comment.js -->
+                    <form method="post" action="/comment"> 
+                        <div class="form-group">
+                            <label for="comment">Make a Comment</label>
+                            <input type="hidden" name="artid" value="<%= data.id || '' %>">
+                            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Make a comment"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    <hr>
+                    <h5 class="card-title">Comments</h5>
+                    <ul class="list-group">
+                        <% cdata.forEach(cdata => { %>
+                        <li class="list-group-item">
+                            <p class="comment-time"><a><%= cdata.uname %></a> at <%= cdata.created %></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a><%= cdata.comment %></a>
+                            </div>
+                        </li>
+                        <% }); %>
+                    </ul>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <hr>
-
-            <div class="comment">
-                <h6 class="comment-author"></h6>
-                <p class="comment-content"></p>
-                <p class="comment-time"></p>
-                <hr>
+            </div>
+            </div>
             </div>
         </div>
     </div>

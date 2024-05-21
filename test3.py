@@ -3,7 +3,6 @@ import numpy as np
 import torch
 import sys
 
-# Load the YOLOv5 model
 def load_model():
     try:
         model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt')
@@ -57,8 +56,8 @@ def interpret_clarity_score(score):
     else:
         return "p"
 
-def main(image_path):
-    
+def main():
+    image_path = 'test.jpg'
     image = load_image(image_path)
     if image is None:
         return
@@ -79,7 +78,7 @@ def main(image_path):
     con2 = int(con*100)
     # car_confidence_score = vehicle_confidence * 100 if vehicle_confidence >= 0.5 else vehicle_confidence * 0.7 if vehicle_confidence else 0
 
-    total_score = con2
+    total_score = 
     if interpretation == "p":
         total_score -= 25
     elif interpretation == "a":
@@ -91,10 +90,7 @@ def main(image_path):
 
     print(total_score)
 
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python ip2.py <image_path>")
-        exit(1)
     
-    image_path = sys.argv[1]
-    main(image_path)
+    main()

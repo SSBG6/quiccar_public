@@ -11,7 +11,6 @@ module.exports = {
             if (!vehicle) {
                 return res.status(401).send('<script>alert("no vehicle found"); window.location.href="/profile";</script>');
             }
-            vehicle.files = files;
             vehicle.title = title;
             vehicle.time = time;
             vehicle.make = make;
@@ -30,9 +29,9 @@ module.exports = {
             
             
 
-            //await vehicle.save();
+            await vehicle.save();
             console.log('Data updated successfully');
-
+            return res.redirect('/profile');
         } catch (error) {
             console.error('Error updating profile:', error);
             return res.status(500).send('Error updating profile');

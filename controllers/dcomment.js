@@ -7,7 +7,7 @@ module.exports = {
         try {
             // Find and delete the vehicle with the specified ID
             const deleteComment = await CommentModel.findOneAndDelete({ cid: id });
-            if (!deletedVehicle) {
+            if (!deleteComment) {
                 // If the vehicle was not found, return a 404 status and an error message
                 return res.status(404).json({ message: "comment not found" });
             }

@@ -46,6 +46,12 @@ app.get('/logout', (req, res) => {
         res.redirect("/");
     })
 });
+//delete acc
+const delacc = require('./controllers/duser.js');
+app.get('/dacc', async (req, res) => {
+    await delacc.post(req, res); 
+});
+
 //ejs thing
 app.set('view engine', 'ejs');
 
@@ -204,6 +210,7 @@ app.get('/profile', async (req, res) => {
         if (!vehicles) {
             return res.status(404).send('Vehicle not found');
         }
+        
         const articles = await ArticleModel.find({ userid: usersid });
         if (!articles) {
             return res.status(404).send('Article not found');
@@ -212,12 +219,33 @@ app.get('/profile', async (req, res) => {
         if (!auctions) {
             return res.status(404).send('auction not found');
         }
-        const comments = await AuctionModel.find({ uid: usersid });
-        if (!comments) {
-            return res.status(404).send('auction not found');
+        let newAuctions = [];
+        for(let auction of auctions){
+            if(auction.status === 'closed'){
+                if (!auction.highestbidder) {
+                    newAuctions.push({...auction._doc, phone: "No bidders", email: "No bidders"})
+                }
+                else{
+            const bidderDetails = await UserModel.findOne({ userid: auction.highestbidder });
+            console.log(bidderDetails)
+            newAuctions.push({...auction._doc, phone: bidderDetails.phone, email: bidderDetails.email})
+            }}
+            else {
+                newAuctions.push(auction);
+            }
         }
+
+        const comments = await CommentModel.find({ uid: usersid });
+        if (!comments) {
+            return res.status(404).send('comment not found');
+        }
+        console.log(newAuctions)
+        //const winner = await UserModel.findOne({ userid: auctions.highestbidder });
+        // console.log(winner.phone);
         // const comments = await CommentModel.find({ userid: usersid });
-        res.render('account', { vehicles, articles, auctions,comments });
+        console.log(comments)
+        res.render('account', { vehicles, articles, auctions: newAuctions, comments});
+        
     } catch (error) {
         // Handle error
         console.error(error);
@@ -261,15 +289,23 @@ app.get('/myv', async (req, res) => {
 
 //community pages
 app.get('/community', async (req, res) => {
-    // Fetch all articles from the database
-    try {
-        const articles = await ArticleModel.find();
-        res.render('community', { articles });
+    const articles = await ArticleModel.find();
+    console.log(articles);
+    let newArticles = [];
+    try{
+    for(let article of articles){
+        const poster = await UserModel.findOne({ userid: article.userid });
+        newArticles.push({...article._doc, uname: poster.username});
+        console.log(newArticles);
+    }
+    
+        res.render('community', { cdata:newArticles });
     } catch (error) {
         // Handle error
         console.error(error);
         res.status(500).send('Internal Server Error');
     }
+    
 });
 //saving
 const savearticle = require('./controllers/savearticle.js');

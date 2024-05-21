@@ -6,7 +6,9 @@ module.exports = {
         
         try {
             const deletedArticle = await ArticleModel.findOneAndDelete({ artid: id });
-            if (!deletedArticle) {
+            const deleteComments = await ArticleModel.deleteMany({ artid: id });
+            
+            if (!deletedArticle || !deleteComments) {
                 return res.status(404).json({ message: "Article not found" });
             }
             res.redirect('/profile');

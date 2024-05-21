@@ -10,6 +10,7 @@ module.exports = {
     post: async (req, res) => {
         
         const { artid, comment} = req.body;
+        console.log(artid);
         
         const { userid } = req.session;
         console.log(userid, comment);
@@ -25,7 +26,7 @@ module.exports = {
             uid: userid,
             cid: cid,
             comment: comment,
-            created: new Date(), // Current date and time
+            created: new Date().toLocaleString(), // Current date and time in a human-readable format
         });
         await ncomment.save();
         res.redirect(`/article?id=${artid}`); // Redirect to a page showing all articles

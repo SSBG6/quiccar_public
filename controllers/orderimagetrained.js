@@ -6,7 +6,7 @@ const VehicleModel = require('../models/vehicle.js');
 
 const runPythonScript = (filePath) => {
     return new Promise((resolve, reject) => {
-        exec(`python ip.py "${filePath}"`, (error, stdout, stderr) => {
+        exec(`python ip2.py "${filePath}"`, (error, stdout, stderr) => {
             if (error) {
                 reject(error);
             } else {
