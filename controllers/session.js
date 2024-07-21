@@ -10,7 +10,7 @@ const mwsess = session({
     resave: false,
     saveUninitialized: false,
     store: new MongoStore({
-        mongoUrl: 'mongodb+srv://admin:hWhFls94NmEdGZ6E@qcdb.6y9mcpc.mongodb.net/qccardb',
+        mongoUrl: 'mongodb+srv://admin:xxx@xxx.xxx.mongodb.net/qccardb',
         ttl: 3600 // TTL 1 hour in seconds
     })
 });

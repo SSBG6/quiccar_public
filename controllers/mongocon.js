@@ -2,7 +2,7 @@ const { MongoClient } = require('mongodb');
 
 
 // Connection URI
-const uri = 'mongodb+srv://admin:hWhFls94NmEdGZ6E@qcdb.6y9mcpc.mongodb.net/';
+const uri = 'mongodb+srv://admin:xxx@xxx.xxx.mongodb.net/';
 
 // Mongoose
 

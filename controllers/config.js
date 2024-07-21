@@ -1,3 +1,3 @@
-const JWT_SECRET = 'TSK'; // its a top secret secret 
+const JWT_SECRET = 'xxx'; // its a top secret secret 
 
 module.exports = JWT_SECRET;

@@ -22,7 +22,7 @@ module.exports = {
                 service: 'gmail',
                 auth: {
                     user: 'willrisetothetop@gmail.com',
-                    pass: 'qpsf bteo uccg lefw'
+                    pass: 'xxxx xxxx xxxx xxxx'
                 },
                 tls: {
                     rejectUnauthorized: false
